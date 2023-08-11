@@ -88,7 +88,7 @@ public class AttachService {
 
 
     public byte[] downloadImage(String fileName) throws IOException{
-        Optional<AttachDTO> imageObject = attachRepository.findAllByOrigin_name(fileName);
+        Optional<AttachEntity> imageObject = attachRepository.getByName(fileName);
         String fullPath = imageObject.get().getPath();
         return Files.readAllBytes(new File(fullPath).toPath());
     }
