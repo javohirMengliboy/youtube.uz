@@ -11,7 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/v1/email")
+@RequestMapping("/api/v1/email")
 public class EmailController {
 
     @Autowired
