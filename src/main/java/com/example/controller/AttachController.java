@@ -36,6 +36,7 @@ public class AttachController {
     }
 
 
+    @GetMapping("/admin/pagination")
     public ResponseEntity<PageImpl<AttachDTO>>pagination(@RequestParam(value = "page", defaultValue = "1") Integer page,
                                                          @RequestParam(value = "size", defaultValue ="10") Integer size){
         return ResponseEntity.ok(attachService.pagination(page-1,size));
