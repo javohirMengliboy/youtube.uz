@@ -23,6 +23,7 @@ public class ProfileDTO {
     private ProfileRole role;
     private ProfileStatus status;
     private LocalDateTime createdDate;
+    private String jwt;
 
     public ProfileDTO() {
     }

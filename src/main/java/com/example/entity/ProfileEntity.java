@@ -35,6 +35,9 @@ public class ProfileEntity extends BaseEntity{
     @Column()
     private ProfileRole role;
 
+    @Column(name = "prt_id")
+    private String prtId;
+
     @Enumerated(EnumType.STRING)
     @Column()
     private ProfileStatus status;

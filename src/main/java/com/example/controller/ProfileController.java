@@ -22,6 +22,11 @@ public class ProfileController {
         return ResponseEntity.ok().body(profileService.updateEmail(email));
     }
 
+    @PutMapping("/update/email/{jwt}")
+    public ResponseEntity<Boolean> updateEmailVerification(@PathVariable("jwt") String jwt){
+        return ResponseEntity.ok().body(profileService.updateEmailVerification(jwt));
+    }
+
     @PutMapping("/update_detail")
     public ResponseEntity<ProfileDTO> updateDetail(@RequestBody() ProfileDTO dto){
         return ResponseEntity.ok().body(profileService.updateDetail(dto));

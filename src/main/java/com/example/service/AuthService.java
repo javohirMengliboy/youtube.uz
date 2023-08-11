@@ -1,18 +1,27 @@
 package com.example.service;
 
+import com.example.dto.ApiResponseDTO;
+import com.example.dto.JwtDTO;
 import com.example.dto.ProfileDTO;
 import com.example.entity.ProfileEntity;
+import com.example.enums.ProfileRole;
+import com.example.enums.ProfileStatus;
 import com.example.exp.AppBadRequestException;
 import com.example.exp.ItemNotFoundException;
 import com.example.repository.ProfileRepository;
+import com.example.util.JWTUtil;
 import com.example.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class AuthService {
     @Autowired
     private ProfileRepository profileRepository;
+    @Autowired
+    private MailSenderService mailSenderService;
 
     @Autowired
     private MD5Util md5Util;
@@ -24,7 +33,10 @@ public class AuthService {
         entity.setEmail(dto.getEmail());
         entity.setPassword(md5Util.encode(dto.getPassword()));
         entity.setPhotoId(dto.getPhotoId());
+        entity.setRole(ProfileRole.ROLE_USER);
+        entity.setStatus(ProfileStatus.REGISTRATION);
         profileRepository.save(entity);
+        mailSenderService.sendEmailVerification(dto.getEmail(), entity.getName(), entity.getId(), entity.getEmail());
         dto.setId(entity.getId());
         dto.setRole(entity.getRole());
         dto.setStatus(entity.getStatus());
@@ -32,11 +44,44 @@ public class AuthService {
         return dto;
     }
 
-    public Boolean authorization(ProfileDTO dto) {
-        ProfileEntity entity = profileRepository.findByEmail(dto.getEmail()).orElseThrow(()->new ItemNotFoundException("Wrong email"));
-        if (!entity.getPassword().equals(md5Util.encode(dto.getPassword()))){
-            throw new AppBadRequestException("Wrong password");
+    public ApiResponseDTO authorization(ProfileDTO dto) {
+        Optional<ProfileEntity> optional = profileRepository.findByEmail(dto.getEmail());
+        if (optional.isEmpty()){
+            return new ApiResponseDTO(false,"Login or password wrong");
         }
-        return true;
+        ProfileEntity entity = optional.get();
+        if (!entity.getPassword().equals(md5Util.encode(dto.getPassword()))){
+            return new ApiResponseDTO(false,"Login or password wrong");
+        }
+        if (!entity.getStatus().equals(ProfileStatus.ACTIVE)){
+            return new ApiResponseDTO(false,"Your status not active");
+        }
+
+        ProfileDTO response = new ProfileDTO();
+        response.setId(entity.getId());
+        response.setName(entity.getName());
+        response.setSurname(entity.getSurname());
+        response.setRole(entity.getRole());
+        response.setEmail(entity.getEmail());
+        response.setJwt(JWTUtil.encode(entity.getId(), entity.getEmail()));
+        return new ApiResponseDTO(true, response);
+    }
+
+    public ApiResponseDTO verification(String jwt) {
+        JwtDTO jwtDTO = JWTUtil.decodeEmailJwt(jwt);
+
+        Optional<ProfileEntity> exists = profileRepository.findByEmail(jwtDTO.getEmail());
+        if (exists.isEmpty()) {
+            throw new AppBadRequestException("Profile not found");
+        }
+
+        ProfileEntity entity = exists.get();
+        if (!entity.getStatus().equals(ProfileStatus.REGISTRATION)) {
+            throw new AppBadRequestException("Wrong status");
+        }
+
+        entity.setStatus(ProfileStatus.ACTIVE);
+        profileRepository.save(entity); // update
+        return new ApiResponseDTO(true, "Registration completed");
     }
 }

@@ -1,0 +1,39 @@
+### Change Password
+PUT http://localhost:7070/api/v1/profile/change_password?newPassword=
+Authorization: Bearer
+
+### Change Email
+PUT http://localhost:7070/api/v1/profile/update_email?email=jnjn
+Authorization: Bearer
+
+### Change Detail
+PUT http://localhost:7070/api/v1/profile/update_detail
+Content-Type: application/json
+Authorization: Bearer
+
+{
+  "name": "",
+  "surname": " "
+}
+
+### Change Main Photo
+PUT http://localhost:7070/api/v1/profile/update_main_photo?newPhoto=jnjn
+Authorization: Bearer
+
+### Get Detail
+GET http://localhost:7070/api/v1/profile/get_detail
+Authorization: Bearer
+
+### Create
+POST http://localhost:7070/api/v1/profile/create
+Content-Type: application/json
+Authorization: Bearer
+
+{
+  "name": "",
+  "surname": " ",
+  "email": " ",
+  "password": " "
+}
+
+

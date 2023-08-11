@@ -13,16 +13,16 @@ public class JWTUtil {
     private static final int tokenLiveTime = 1000 * 3600 * 24; // 1-hour
 
     private static final int emailTokenLiveTime = tokenLiveTime * 24; // 1-day
-    public static String encode(String phone, ProfileRole role) {
+    public static String encode(String id, String email) {
         JwtBuilder jwtBuilder = Jwts.builder();
         jwtBuilder.setIssuedAt(new Date());
         jwtBuilder.signWith(SignatureAlgorithm.HS512, secretKey);
 
-        jwtBuilder.claim("phone", phone);
-        jwtBuilder.claim("role", role.toString());
+        jwtBuilder.claim("email", email);
+        jwtBuilder.claim("id", id);
 
         jwtBuilder.setExpiration(new Date(System.currentTimeMillis() + (tokenLiveTime)));
-        jwtBuilder.setIssuer("kunuz test portali");
+        jwtBuilder.setIssuer("Youtube test portali");
         return jwtBuilder.compact();
     }
     public static JwtDTO decode(String token) {
@@ -34,27 +34,25 @@ public class JWTUtil {
 
             Claims claims = jws.getBody();
 
-            String phone = (String) claims.get("phone");
-
-            String role = (String) claims.get("role");
-            ProfileRole profileRole = ProfileRole.valueOf(role);
-
-            return new JwtDTO(phone, profileRole);
+            String email = (String) claims.get("email");
+            String id = (String) claims.get("id");
+            return new JwtDTO(id,email);
         } catch (JwtException e) {
             throw new UnAuthorizedException("Your session expired");
         }
     }
 
 
-    public static String encodeEmailJwt(Integer profileId) {
+    public static String encodeEmailJwt(String profileId, String email) {
         JwtBuilder jwtBuilder = Jwts.builder();
         jwtBuilder.setIssuedAt(new Date());
         jwtBuilder.signWith(SignatureAlgorithm.HS512, secretKey);
 
         jwtBuilder.claim("id", profileId);
+        jwtBuilder.claim("email", email);
 
         jwtBuilder.setExpiration(new Date(System.currentTimeMillis() + (emailTokenLiveTime)));
-        jwtBuilder.setIssuer("kunuz test portali");
+        jwtBuilder.setIssuer("Youtube test portali");
         return jwtBuilder.compact();
     }
 
@@ -64,8 +62,9 @@ public class JWTUtil {
             jwtParser.setSigningKey(secretKey);
             Jws<Claims> jws = jwtParser.parseClaimsJws(token);
             Claims claims = jws.getBody();
-            Integer id = (Integer) claims.get("id");
-            return new JwtDTO(id, null);
+            String id = (String) claims.get("id");
+            String email = (String) claims.get("email");
+            return new JwtDTO(id, email);
         } catch (JwtException e) {
             throw new UnAuthorizedException("Your session expired");
         }

@@ -7,17 +7,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class JwtDTO {
-    private Integer id;
-    private ProfileRole role;
-    private String phone;
+    private String id;
+    private String email;
 
-    public JwtDTO(Integer id, ProfileRole role) {
+
+    public JwtDTO(String id, String email) {
         this.id = id;
-        this.role = role;
-    }
-
-    public JwtDTO(String phone, ProfileRole role) {
-        this.role = role;
-        this.phone = phone;
+        this.email = email;
     }
 }

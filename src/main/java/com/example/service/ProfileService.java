@@ -1,17 +1,27 @@
 package com.example.service;
 
+import com.example.dto.JwtDTO;
 import com.example.dto.ProfileDTO;
 import com.example.entity.ProfileEntity;
+import com.example.enums.ProfileRole;
+import com.example.enums.ProfileStatus;
+import com.example.exp.AppBadRequestException;
 import com.example.exp.ItemNotFoundException;
 import com.example.repository.ProfileRepository;
+import com.example.util.JWTUtil;
 import com.example.util.SpringSecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class ProfileService {
     @Autowired
     private ProfileRepository profileRepository;
+    @Autowired
+    private MailSenderService mailSenderService;
 
     public Boolean changePassword(String newPassword) {
         ProfileEntity entity = get();
@@ -22,8 +32,7 @@ public class ProfileService {
 
     public Boolean updateEmail(String email) {
         ProfileEntity entity = get();
-        entity.setPassword(email);
-        profileRepository.save(entity);
+        mailSenderService.updateEmail(email, entity.getName(),entity.getId());
         return true;
     }
 
@@ -72,7 +81,10 @@ public class ProfileService {
         entity.setName(dto.getName());
         entity.setSurname(dto.getSurname());
         entity.setEmail(dto.getEmail());
-        entity.setRole(dto.getRole());
+        entity.setPassword(dto.getPassword());
+        entity.setRole(ProfileRole.ROLE_ADMIN);
+        entity.setStatus(ProfileStatus.ACTIVE);
+        entity.setPrtId(get().getId());
         profileRepository.save(entity);
         dto.setId(entity.getId());
         dto.setPassword(entity.getPassword());
@@ -80,5 +92,18 @@ public class ProfileService {
         dto.setStatus(entity.getStatus());
         dto.setCreatedDate(entity.getCreatedDate());
         return dto;
+    }
+
+    public Boolean updateEmailVerification(String jwt) {
+        JwtDTO jwtDTO = JWTUtil.decodeEmailJwt(jwt);
+
+        Optional<ProfileEntity> exists = profileRepository.findById(jwtDTO.getId());
+        if (exists.isEmpty()) {
+            throw new AppBadRequestException("Profile not found");
+        }
+        ProfileEntity entity = exists.get();
+        entity.setEmail(jwtDTO.getEmail());
+        profileRepository.save(entity);
+        return true;
     }
 }
