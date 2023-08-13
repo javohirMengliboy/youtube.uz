@@ -14,12 +14,12 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/registration")
-    public ResponseEntity<ProfileDTO> registration(ProfileDTO dto){
+    public ResponseEntity<ProfileDTO> registration(@RequestBody ProfileDTO dto){
         return ResponseEntity.ok().body(authService.registration(dto));
     }
 
     @PostMapping("/authorization")
-    public ResponseEntity<ApiResponseDTO> authorization(ProfileDTO dto){
+    public ResponseEntity<ApiResponseDTO> authorization(@RequestBody ProfileDTO dto){
         return ResponseEntity.ok().body(authService.authorization(dto));
     }
 
