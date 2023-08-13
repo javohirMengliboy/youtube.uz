@@ -1,0 +1,12 @@
+### create email
+POST localhost:8080/api/v1/email/create
+Content-Type: application/json
+
+{
+  "email": "hamdamovshohjahon2007@mail.ru",
+  "title": "YouTube.com",
+  "message": "this is code verification"
+}
+
+### pagination
+GET localhost:8080/api/v1/email/admin/pagination?page=1&size=10
