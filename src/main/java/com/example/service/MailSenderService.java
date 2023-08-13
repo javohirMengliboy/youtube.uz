@@ -14,11 +14,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 @Service
 public class MailSenderService {
-    private JavaMailSender javaMailSender;
 
     @Autowired
     private EmailHistoryService emailHistoryService;
 
+    private JavaMailSender javaMailSender;
     @Autowired
     public void setJavaMailSender(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;

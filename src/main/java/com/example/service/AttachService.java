@@ -48,14 +48,14 @@ public class AttachService {
             Path path = Paths.get(folderName + "/" + pathFolder + "/s" + key + "." + extension);
             Files.write(path, bytes);
             AttachEntity attachEntity = new AttachEntity();
-            attachEntity.setId(Integer.valueOf(key));
+            attachEntity.setId(key);
             attachEntity.setSize(file.getSize());
             attachEntity.setExtension(extension);
             attachEntity.setOrigin_name(file.getOriginalFilename());
             attachEntity.setPath(folderName + "/" + pathFolder + "/" + key + "." + extension);
             attachRepository.save(attachEntity);
             AttachDTO attachDTO = new AttachDTO();
-            attachDTO.setId(Integer.valueOf(key));
+            attachDTO.setId(key);
             attachDTO.setPath(attachUrl);
             attachDTO.setSize(file.getSize());
             attachDTO.setExtension(extension);

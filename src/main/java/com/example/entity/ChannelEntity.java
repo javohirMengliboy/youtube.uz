@@ -7,6 +7,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@Entity
+@Table(name = "channel")
 public class ChannelEntity extends BaseEntity{
     @Column(unique = true)
     private String name;

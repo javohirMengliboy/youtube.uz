@@ -21,9 +21,6 @@ public class EmailHistoryService {
     private EmailHistoryRepository emailRepository;
 
     @Autowired
-    private MailSenderService mailSenderService;
-
-    @Autowired
     private CustomEmailRepository customEmailRepository;
 
     public void setValue(EmailHistoryDTO dto) {
