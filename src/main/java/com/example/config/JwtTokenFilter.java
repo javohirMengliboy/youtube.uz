@@ -47,7 +47,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             response.setHeader("Message", e.getMessage());
             return;
         }
-        UserDetails userDetails = userDetailsService.loadUserByUsername(jwtDto.getPhone());
+        UserDetails userDetails = userDetailsService.loadUserByUsername(jwtDto.getEmail());
         UsernamePasswordAuthenticationToken
                 authentication = new UsernamePasswordAuthenticationToken(userDetails,
                 null, userDetails.getAuthorities());
