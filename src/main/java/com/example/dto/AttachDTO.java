@@ -9,7 +9,7 @@ import lombok.Setter;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AttachDTO {
 
-    private Integer id;
+    private String id;
     private String origin_name;
     private Long size;
     private String type;

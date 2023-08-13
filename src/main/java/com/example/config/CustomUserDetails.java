@@ -1,11 +1,17 @@
 package com.example.config;
 
 import com.example.entity.ProfileEntity;
+import com.example.enums.ProfileStatus;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
+@Getter
 public class CustomUserDetails implements UserDetails {
     public ProfileEntity profile;
     public CustomUserDetails(ProfileEntity profile) {
@@ -14,9 +20,10 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        List<GrantedAuthority> list = new LinkedList<>();
+        list.add(new SimpleGrantedAuthority(profile.getRole().name()));
+        return list;
     }
-
     @Override
     public String getPassword() {
         return profile.getPassword();
@@ -44,10 +51,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return profile.getStatus().equals(ProfileStatus.ACTIVE);
     }
 
-    public ProfileEntity getProfile() {
-        return profile;
-    }
 }

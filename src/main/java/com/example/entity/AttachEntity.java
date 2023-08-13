@@ -10,9 +10,10 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "attach")
 public class AttachEntity {
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Id
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
+
     @Column(name = "origin_name")
     private String origin_name;
 
