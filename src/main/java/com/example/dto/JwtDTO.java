@@ -10,7 +10,6 @@ public class JwtDTO {
     private String id;
     private String email;
 
-
     public JwtDTO(String id, String email) {
         this.id = id;
         this.email = email;
