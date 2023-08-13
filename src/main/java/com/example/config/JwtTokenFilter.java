@@ -18,6 +18,7 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 @Component
 public class JwtTokenFilter extends OncePerRequestFilter {
@@ -27,7 +28,9 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         AntPathMatcher pathMatcher = new AntPathMatcher();
-        return super.shouldNotFilter(request);
+        return Arrays
+                .stream(SpringSecurityConfig.AUTH_WHITELIST)
+                .anyMatch(p -> pathMatcher.match(p, request.getServletPath()));
     }
 
     @Override
@@ -47,7 +50,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             response.setHeader("Message", e.getMessage());
             return;
         }
-        UserDetails userDetails = userDetailsService.loadUserByUsername(jwtDto.getPhone());
+        UserDetails userDetails = userDetailsService.loadUserByUsername(jwtDto.getEmail());
         UsernamePasswordAuthenticationToken
                 authentication = new UsernamePasswordAuthenticationToken(userDetails,
                 null, userDetails.getAuthorities());

@@ -45,13 +45,15 @@ public class AuthService {
     }
 
     public ApiResponseDTO authorization(ProfileDTO dto) {
+        System.out.println(dto.getEmail());
         Optional<ProfileEntity> optional = profileRepository.findByEmail(dto.getEmail());
+        System.out.println(optional.get().getEmail());
         if (optional.isEmpty()){
-            return new ApiResponseDTO(false,"Login or password wrong");
+            return new ApiResponseDTO(false,"Email wrong");
         }
         ProfileEntity entity = optional.get();
         if (!entity.getPassword().equals(md5Util.encode(dto.getPassword()))){
-            return new ApiResponseDTO(false,"Login or password wrong");
+            return new ApiResponseDTO(false,"Password wrong");
         }
         if (!entity.getStatus().equals(ProfileStatus.ACTIVE)){
             return new ApiResponseDTO(false,"Your status not active");

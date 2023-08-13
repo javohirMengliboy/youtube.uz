@@ -28,10 +28,17 @@ public class SpringSecurityConfig {
     @Autowired
     private MD5Util md5Util;
 
+    public static String[] AUTH_WHITELIST = {"/api/v1/auth/**",
+            "/api/v1/news/**",
+            "/api/v1/region/lang",
+            "/api/v1/attach/**",
+            "/api/v1/article/public/*"};
+
 
     @Bean
     public AuthenticationProvider authenticationProvider(){
         final DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService);
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
     }
