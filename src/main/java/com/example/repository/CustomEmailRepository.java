@@ -2,7 +2,7 @@ package com.example.repository;
 
 import com.example.dto.EmailFilterDTO;
 import com.example.dto.FilterResultDTO;
-import com.example.entity.EmailEntity;
+import com.example.entity.EmailHistoryEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class CustomEmailRepository {
     @Autowired
     private EntityManager entityManager;
 
-    public FilterResultDTO<EmailEntity> filter(EmailFilterDTO filterDTO, int page, int size){
+    public FilterResultDTO<EmailHistoryEntity> filter(EmailFilterDTO filterDTO, int page, int size){
 
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -49,7 +49,7 @@ public class CustomEmailRepository {
             countQuery.setParameter(param.getKey(), param.getValue());
         }
 
-        List<EmailEntity> select = selectQuery.getResultList();
+        List<EmailHistoryEntity> select = selectQuery.getResultList();
         Long count = (Long) countQuery.getSingleResult();
 
         return new FilterResultDTO<>(select,count);

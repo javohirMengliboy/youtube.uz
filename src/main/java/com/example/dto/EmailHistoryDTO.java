@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Setter
 @Getter
-public class EmailDTO {
+public class EmailHistoryDTO {
 
     private Integer id;
     private String to_email;
