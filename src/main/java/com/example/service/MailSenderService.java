@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.dto.EmailHistoryDTO;
 import com.example.util.JWTUtil;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -14,12 +15,18 @@ import java.util.concurrent.Executors;
 @Service
 public class MailSenderService {
     private JavaMailSender javaMailSender;
+
+    @Autowired
+    private EmailHistoryService emailHistoryService;
+
     @Autowired
     public void setJavaMailSender(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
     }
+
     @Value("${server.url}")
     private String serverUrl;
+
     public void sendMimeEmail(String toAccount, String text){
         ExecutorService emailExecutor = Executors.newSingleThreadExecutor();
         emailExecutor.execute(new Runnable() {
@@ -52,6 +59,12 @@ public class MailSenderService {
                 "<p>" +
                 String.format("<a href=\"%s\"> Click link to complete registration </a>", url) +
                 "</p>";
+
+        EmailHistoryDTO dto = new EmailHistoryDTO();
+        dto.setTo_email(toAccount);
+        dto.setMessage(url);
+        dto.setTitle(builder);
+        emailHistoryService.setValue(dto);
 
         sendMimeEmail(toAccount, builder);
     }
