@@ -1,5 +1,2 @@
-package com.example.enums;
-
-public enum PlaylistStatus {
-    PRIVATE, PUBLIC
+package com.example.enums;public class PlaylistStatus {
 }
