@@ -1,0 +1,47 @@
+### 1. Create Playlist
+POST http://localhost:7070/api/v1/playlist/create
+Content-Type: application/json
+Authorization: Bearer
+
+{
+  "channelId": "",
+  "name": "",
+  "description": "",
+  "status": "",
+  "orderNumber": 1
+}
+
+### 2. Update Playlist
+PUT http://localhost:7070/api/v1/playlist/update/id
+Content-Type: application/json
+Authorization: Bearer
+
+{
+  "channelId": "",
+  "name": "",
+  "description": "",
+  "status": "",
+  "orderNumber": 1
+}
+
+### 3. Change Playlist
+PUT http://localhost:7070/api/v1/playlist/update_status/id?status=
+Authorization: Bearer
+
+### 4. Delete Playlist
+PUT http://localhost:7070/api/v1/playlist/delete/id
+Authorization: Bearer
+
+### 5. Playlist Pagination
+GET http://localhost:7070/api/v1/playlist/pagination?page=1&size=4
+Authorization: Bearer
+
+### 6. Playlist List By UserId
+GET http://localhost:7070/api/v1/playlist/list_by_user_id?userId=
+Authorization: Bearer
+
+### 7. Get User Playlist
+GET http://localhost:7070/api/v1/playlist/get_user_playlist
+Authorization: Bearer
+
+
