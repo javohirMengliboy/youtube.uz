@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -91,11 +92,17 @@ public class ChannelService {
         return channelPage;
     }
 
-//    public ChannelMapper getById(String id) {
-//    }
+    public ChannelMapper getById(String id) {
+        ChannelEntity entity = get(id);
+        return new ChannelMapper(entity.getName(), entity.getPhotoId(), entity.getDescription(), entity.getStatus());
+    }
 
 
-//    public ChannelMapper pagination(int page, int size) {
-//        Pageable pageable = PageRequest.of(page, size);
-//    }
+    public List<ChannelMapper> getChannelList() {
+        List<ChannelMapper> channelMapperList = channelRepository.getChannelList(SpringSecurityUtil.getCurrentUserId());
+        if (channelMapperList.isEmpty()){
+            throw new ItemNotFoundException("Channel not found");
+        }
+        return channelMapperList;
+    }
 }

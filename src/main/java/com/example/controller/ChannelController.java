@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/channel")
 public class ChannelController {
@@ -51,16 +53,22 @@ public class ChannelController {
     }
 
     // 6. Get Channel By Id
-//    @GetMapping("/get_by_id/{id}")
-//    public ResponseEntity<ChannelMapper> getById(@PathVariable("id") String id){
-//        return ResponseEntity.ok().body(channelService.getById(id));
-//    }
+    @GetMapping("/get_by_id/{id}")
+    public ResponseEntity<ChannelMapper> getById(@PathVariable("id") String id){
+        return ResponseEntity.ok().body(channelService.getById(id));
+    }
 
     // 7. Change Channel Status
     @PutMapping("/update_status/{id}")
     public ResponseEntity<ApiResponseDTO> updateStatus(@PathVariable("id") String id,
                                                        @RequestParam("status") ProfileStatus status){
         return ResponseEntity.ok().body(channelService.updateStatus(id, status));
+    }
+
+    // 8. User Channel List
+    @GetMapping("get_channel_list")
+    public ResponseEntity<List<ChannelMapper>> getChannelList(){
+        return ResponseEntity.ok().body(channelService.getChannelList());
     }
 
 

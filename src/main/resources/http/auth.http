@@ -3,10 +3,10 @@ POST http://localhost:7070/api/v1/auth/registration
 Content-Type: application/json
 
 {
-  "name": "",
-  "surname": "",
-  "email": "",
-  "password": ""
+  "name": "Javohir",
+  "surname": "Mengliboyev",
+  "email": "javohscrip@gamil.com",
+  "password": "Javohir1"
 }
 
 ### Login
