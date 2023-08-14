@@ -10,9 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 @Repository
-public interface TagRepository extends CrudRepository<TagEntity, UUID> {
+public interface TagRepository extends CrudRepository<TagEntity, Integer> {
     @Transactional
     @Modifying
     @Query("update CategoryEntity as c set c.name =:name where c.id =:id")
-    int updateById(@Param("id") UUID id, @Param("name")String name);
+    int updateById(@Param("id") Integer id, @Param("name")String name);
 }

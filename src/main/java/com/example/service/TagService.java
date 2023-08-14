@@ -26,13 +26,13 @@ public class TagService {
         dto.setCreatedDate(entity.getCreatedDate());
         return dto;
     }
-    public Boolean update(UUID id, TagDTO dto){
+    public Boolean update(Integer id, TagDTO dto){
         TagEntity entity = get(id);
         entity.setName(dto.getName());
         int effecterRow = tagRepository.updateById(id, dto.getName());
         return effecterRow == 1;
     }
-    public Boolean delete(UUID id){
+    public Boolean delete(Integer id){
         tagRepository.deleteById(id);
         return true;
     }
@@ -43,7 +43,7 @@ public class TagService {
         return dtos;
     }
 
-    public TagEntity get(UUID id) {
+    public TagEntity get(Integer id) {
         return tagRepository.findById(id).orElseThrow(() -> new AppBadRequestException("Profilr is not founded"));
     }
     TagDTO toDTO(TagEntity entity){

@@ -21,12 +21,12 @@ public class TagController {
         return ResponseEntity.ok(tagService.create(dto));
     }
     @PutMapping(value = "/update/{id}")
-    public ResponseEntity<Boolean> update(@PathVariable("id") UUID id,
+    public ResponseEntity<Boolean> update(@PathVariable("id") Integer id,
                                           @RequestBody TagDTO dto){
         return ResponseEntity.ok(tagService.update(id,dto));
     }
     @DeleteMapping(value = "/delete/{id}")
-    public ResponseEntity<Boolean> delete(@PathVariable("id") UUID id){
+    public ResponseEntity<Boolean> delete(@PathVariable("id") Integer id){
         return ResponseEntity.ok(tagService.delete(id));
     }
     @GetMapping(value = "/all")

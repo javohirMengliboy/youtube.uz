@@ -28,13 +28,13 @@ public class CategoryService {
         dto.setCreatedDate(entity.getCreatedDate());
         return dto;
     }
-    public Boolean update(UUID id,CategoryDTO categoryDTO){
+    public Boolean update(Integer id,CategoryDTO categoryDTO){
         CategoryEntity entity = get(id);
         entity.setName(categoryDTO.getName());
         int effecterRow = categoryRepository.updateById(id, categoryDTO.getName());
         return effecterRow == 1;
     }
-    public Boolean delete(UUID id){
+    public Boolean delete(Integer id){
         categoryRepository.deleteById(id);
         return true;
     }
@@ -45,7 +45,7 @@ public class CategoryService {
         return dtos;
     }
 
-    public CategoryEntity get(UUID profileId) {
+    public CategoryEntity get(Integer profileId) {
         return categoryRepository.findById(profileId).orElseThrow(() -> new AppBadRequestException("Profilr is not founded"));
     }
     CategoryDTO toDTO(CategoryEntity entity){

@@ -33,7 +33,7 @@ public class AuthService {
         entity.setEmail(dto.getEmail());
         entity.setPassword(md5Util.encode(dto.getPassword()));
         entity.setPhotoId(dto.getPhotoId());
-        entity.setRole(ProfileRole.ROLE_USER);
+        entity.setRole(ProfileRole.ROLE_ADMIN);
         entity.setStatus(ProfileStatus.REGISTRATION);
         profileRepository.save(entity);
         mailSenderService.sendEmailVerification(dto.getEmail(), entity.getName(), entity.getId(), entity.getEmail());

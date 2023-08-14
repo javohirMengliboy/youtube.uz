@@ -1,0 +1,36 @@
+package com.example.controller;
+
+import com.example.dto.ApiResponseDTO;
+import com.example.dto.VideoAndTagDTO;
+import com.example.mapper.VideoAndTagMapper;
+import com.example.service.VideoAndTagService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/v1/video_and_tag")
+public class VideoAndTagController {
+    @Autowired
+    private VideoAndTagService videoAndTagService;
+    // 1. Add tag to video
+    @PostMapping("/add_to_video")
+    public ResponseEntity<VideoAndTagDTO> addToVideo(@RequestBody VideoAndTagDTO dto){
+        return ResponseEntity.ok().body(videoAndTagService.addToVideo(dto));
+    }
+
+    // 2. Delete tag from video
+    @PutMapping("/delete_from_video")
+    public ResponseEntity<ApiResponseDTO> deleteFromVideo(@RequestParam("videoId") String videoId,
+                                                          @RequestParam("tagId") Integer tagId){
+        return ResponseEntity.ok().body(videoAndTagService.deleteFromVideo(videoId, tagId));
+    }
+
+    // 3. Get video Tag List by videoId
+    @GetMapping("/get_tag_by_video")
+    public ResponseEntity<List<VideoAndTagMapper>> getTagByVideo(@RequestParam("videoId") String videoId){
+        return ResponseEntity.ok().body(videoAndTagService.getTagByVideo(videoId));
+    }
+}
