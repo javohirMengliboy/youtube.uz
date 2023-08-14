@@ -21,7 +21,7 @@ public class EmailHistoryEntity {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "message")
+    @Column(name = "message",columnDefinition = "TEXT")
     private String message;
 
     @Column(name = "created_date")
