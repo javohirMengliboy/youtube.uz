@@ -8,6 +8,7 @@ import com.example.service.ChannelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,12 +20,14 @@ public class ChannelController {
     private ChannelService channelService;
 
     // 1. Create Channel
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/create")
     public ResponseEntity<ChannelDTO> create(@RequestBody ChannelDTO dto){
         return ResponseEntity.ok().body(channelService.create(dto));
     }
 
     // 2. Update Channel
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PutMapping("/update_detail/{id}")
     public ResponseEntity<ApiResponseDTO> updateDetail(@PathVariable("id") String id,
                                                        @RequestBody ChannelDTO dto){
@@ -32,6 +35,7 @@ public class ChannelController {
     }
 
     // 3. Update Channel photo
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PutMapping("/update_photo/{id}")
     public ResponseEntity<ApiResponseDTO> updatePhoto(@PathVariable("id") String id,
                                                        @RequestParam("photoId") String photoId){
@@ -39,6 +43,7 @@ public class ChannelController {
     }
 
     // 4. Update Channel banner
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PutMapping("/update_banner/{id}")
     public ResponseEntity<ApiResponseDTO> updateBanner(@PathVariable("id") String id,
                                                       @RequestParam("bannerId") String bannerId){
@@ -46,6 +51,7 @@ public class ChannelController {
     }
 
     // 5. Channel Pagination
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/pagination")
     public ResponseEntity<Page<ChannelMapper>> pagination(@RequestParam("page") int page,
                                                          @RequestParam("size") int size){
@@ -53,12 +59,13 @@ public class ChannelController {
     }
 
     // 6. Get Channel By Id
-    @GetMapping("/get_by_id/{id}")
+    @GetMapping("/open/get_by_id/{id}")
     public ResponseEntity<ChannelMapper> getById(@PathVariable("id") String id){
         return ResponseEntity.ok().body(channelService.getById(id));
     }
 
     // 7. Change Channel Status
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @PutMapping("/update_status/{id}")
     public ResponseEntity<ApiResponseDTO> updateStatus(@PathVariable("id") String id,
                                                        @RequestParam("status") ProfileStatus status){
@@ -66,7 +73,8 @@ public class ChannelController {
     }
 
     // 8. User Channel List
-    @GetMapping("get_channel_list")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping("/open/get_channel_list")
     public ResponseEntity<List<ChannelMapper>> getChannelList(){
         return ResponseEntity.ok().body(channelService.getChannelList());
     }

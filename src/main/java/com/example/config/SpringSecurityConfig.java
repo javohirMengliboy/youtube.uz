@@ -1,9 +1,9 @@
 package com.example.config;
 
 import com.example.util.MD5Util;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,10 +15,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-
-@Getter
-@Setter
 @Configuration
+@EnableWebSecurity
+@EnableMethodSecurity()
 public class SpringSecurityConfig {
     @Autowired
     private UserDetailsService userDetailsService;
@@ -30,10 +29,12 @@ public class SpringSecurityConfig {
     private MD5Util md5Util;
 
     public static String[] AUTH_WHITELIST = {"/api/v1/auth/**",
-            "/api/v1/news/**",
-            "/api/v1/region/lang",
             "/api/v1/attach/**",
-            "/api/v1/article/public/*"};
+            "/api/v1/tag/open/**",
+            "/api/v1/category/open/**",
+            "/api/v1/channel/open/**",
+            "/api/v1/video/open/**",
+    };
 
 
     @Bean
@@ -61,7 +62,11 @@ public class SpringSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        http.authorizeHttpRequests((c)-> c.requestMatchers("/api/v1/auth/**").permitAll().anyRequest().authenticated())
+        http.authorizeHttpRequests((c)->
+               c.requestMatchers(AUTH_WHITELIST).permitAll()
+                       .requestMatchers("/api/v1/auth/**").permitAll()
+                       .requestMatchers("/api/v1/tag/open/**").permitAll()
+                       .anyRequest().authenticated())
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
         http.csrf(AbstractHttpConfigurer::disable).cors(AbstractHttpConfigurer::disable);
         return http.build();

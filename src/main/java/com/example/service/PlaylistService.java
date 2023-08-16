@@ -3,7 +3,10 @@ package com.example.service;
 import com.example.dto.ApiResponseDTO;
 import com.example.dto.PlaylistDTO;
 import com.example.entity.PlaylistEntity;
+import com.example.entity.ProfileEntity;
 import com.example.enums.PlaylistStatus;
+import com.example.enums.ProfileRole;
+import com.example.exp.AppBadRequestException;
 import com.example.exp.ItemNotFoundException;
 import com.example.mapper.PlayListShortInfo;
 import com.example.repository.PlaylistRepository;
@@ -38,6 +41,10 @@ public class PlaylistService {
     // 2. Update Playlist
     public ApiResponseDTO update(Integer id, PlaylistDTO dto) {
         PlaylistEntity entity = get(id);
+        ProfileEntity profile = getOwner(entity.getId());
+        if (!SpringSecurityUtil.getCurrentUserId().equals(profile.getId())){
+            throw new AppBadRequestException("Can't change this playlist");
+        }
         entity.setChannelId(dto.getChannelId());
         entity.setName(dto.getName());
         entity.setDescription(dto.getDescription());
@@ -47,15 +54,13 @@ public class PlaylistService {
         return new ApiResponseDTO(true, "Playlist successfully changed");
     }
 
-    private PlaylistEntity get(Integer id) {
-        return playlistRepository.findById(id).orElseThrow(()->new ItemNotFoundException("Playlist not found"));
-    }
-
-    // 4. Delete Playlist
-
     // 3. Change Playlist
     public ApiResponseDTO updateStatus(Integer id, PlaylistStatus status) {
         PlaylistEntity entity = get(id);
+        ProfileEntity profile = getOwner(entity.getId());
+        if (!SpringSecurityUtil.getCurrentUserId().equals(profile.getId())){
+            throw new AppBadRequestException("Can't change status this playlist");
+        }
         entity.setStatus(status);
         playlistRepository.save(entity);
         return new ApiResponseDTO(true, "Playlist status successfully changed");
@@ -64,6 +69,11 @@ public class PlaylistService {
     // 4. Delete Playlist
     public ApiResponseDTO delete(Integer id) {
         PlaylistEntity entity = get(id);
+        ProfileEntity owner = getOwner(entity.getId());
+        ProfileEntity currentUser = SpringSecurityUtil.getCurrentUser().getProfile();
+        if (currentUser.getRole().equals(ProfileRole.ROLE_USER) && !currentUser.getId().equals(owner.getId())){
+            throw new AppBadRequestException("Can't delete this playlist");
+        }
         playlistRepository.delete(entity);
         return new ApiResponseDTO(true, "Playlist deleted");
     }
@@ -94,5 +104,14 @@ public class PlaylistService {
             throw new ItemNotFoundException("Playlist list not found");
         }
         return playlistList;
+    }
+
+    //----------------------------------------------
+    private PlaylistEntity get(Integer id) {
+        return playlistRepository.findById(id).orElseThrow(()->new ItemNotFoundException("Playlist not found"));
+    }
+
+    public ProfileEntity getOwner(Integer playlistId){
+        return playlistRepository.getOwner(playlistId);
     }
 }

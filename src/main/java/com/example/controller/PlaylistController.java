@@ -8,6 +8,7 @@ import com.example.service.PlaylistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,12 +20,14 @@ public class PlaylistController {
     private PlaylistService playlistService;
 
     // 1. Create Playlist
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/create")
     public ResponseEntity<PlaylistDTO> create(@RequestBody PlaylistDTO dto){
         return ResponseEntity.ok().body(playlistService.create(dto));
     }
 
     // 2. Update Playlist
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PutMapping("/update/{id}")
     public ResponseEntity<ApiResponseDTO> update(@PathVariable("id") Integer id,
                                                  @RequestBody PlaylistDTO dto){
@@ -32,6 +35,7 @@ public class PlaylistController {
     }
 
     // 3. Change Playlist
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PutMapping("/update_status/{id}")
     public ResponseEntity<ApiResponseDTO> updateStatus(@PathVariable("id") Integer id,
                                                        @RequestParam("status") PlaylistStatus status){
@@ -39,12 +43,14 @@ public class PlaylistController {
     }
 
     // 4. Delete Playlist
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PutMapping("/delete/{id}")
     public ResponseEntity<ApiResponseDTO> delete(@PathVariable("id") Integer id){
         return ResponseEntity.ok().body(playlistService.delete(id));
     }
 
     // 5. Playlist Pagination
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/pagination")
     public ResponseEntity<Page<PlaylistDTO>> pagination(@RequestParam("page") int page,
                                                         @RequestParam("size") int size){
@@ -52,12 +58,14 @@ public class PlaylistController {
     }
 
     // 6. Playlist List By UserId
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/list_by_user_id")
     public ResponseEntity<List<PlaylistDTO>> getListByUserId(@RequestParam("userId") String userId){
         return ResponseEntity.ok().body(playlistService.getListByUserId(userId));
     }
 
     // 7. Get User Playlist
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PutMapping("/get_user_playlist")
     public ResponseEntity<List<PlayListShortInfo>> getUserPlaylist(){
         return ResponseEntity.ok().body(playlistService.getUserPlaylist());

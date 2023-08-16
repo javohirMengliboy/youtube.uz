@@ -17,10 +17,12 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    // 1. Create Category
     public CategoryDTO create(CategoryDTO dto){
         if (dto.getName() == null || dto.getName().isBlank()) {
             throw new AppBadRequestException("Name is not Available");
         }
+
         CategoryEntity entity = new CategoryEntity();
         entity.setName(dto.getName());
         categoryRepository.save(entity);
@@ -28,16 +30,22 @@ public class CategoryService {
         dto.setCreatedDate(entity.getCreatedDate());
         return dto;
     }
-    public Boolean update(UUID id,CategoryDTO categoryDTO){
+
+    // 2. Update Category
+    public Boolean update(Integer id,CategoryDTO categoryDTO){
         CategoryEntity entity = get(id);
         entity.setName(categoryDTO.getName());
         int effecterRow = categoryRepository.updateById(id, categoryDTO.getName());
         return effecterRow == 1;
     }
-    public Boolean delete(UUID id){
+
+    // 3. Delete Category
+    public Boolean delete(Integer id){
         categoryRepository.deleteById(id);
         return true;
     }
+
+    // 4. Category List
     public List<CategoryDTO> getAll(){
         Iterable<CategoryEntity> iterable = categoryRepository.findAll();
         List<CategoryDTO> dtos = new LinkedList<>();
@@ -45,7 +53,8 @@ public class CategoryService {
         return dtos;
     }
 
-    public CategoryEntity get(UUID profileId) {
+    //---------------------------------------------------------------
+    public CategoryEntity get(Integer profileId) {
         return categoryRepository.findById(profileId).orElseThrow(() -> new AppBadRequestException("Profilr is not founded"));
     }
     CategoryDTO toDTO(CategoryEntity entity){

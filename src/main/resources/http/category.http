@@ -1,0 +1,24 @@
+### 1. Create Category
+POST localhost:7070/api/v1/category
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2OTIwOTQ4MTAsImVtYWlsIjoiamF2b2hzY3JpcHRAZ21haWwuY29tIiwiaWQiOiJkNGFlMTE0Yi03ZDc4LTQ1YjEtOWZmMC00OGI4NTc5ZGMxMjIiLCJleHAiOjE2OTIxODEyMTAsImlzcyI6IllvdXR1YmUgdGVzdCBwb3J0YWxpIn0.4oPUKhlqUNF09GguZF9-HG4rl4L8NSVLe6DrAKJD5k4bvD6VlSftpvr264o7-fCEet-7_U7WdqLtCuWjLfkSWQ
+
+{
+  "name": "Gaming"
+}
+
+### 2. Update Category
+PUT localhost:7070/api/v1/category/update/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2OTIwOTQ4MTAsImVtYWlsIjoiamF2b2hzY3JpcHRAZ21haWwuY29tIiwiaWQiOiJkNGFlMTE0Yi03ZDc4LTQ1YjEtOWZmMC00OGI4NTc5ZGMxMjIiLCJleHAiOjE2OTIxODEyMTAsImlzcyI6IllvdXR1YmUgdGVzdCBwb3J0YWxpIn0.4oPUKhlqUNF09GguZF9-HG4rl4L8NSVLe6DrAKJD5k4bvD6VlSftpvr264o7-fCEet-7_U7WdqLtCuWjLfkSWQ
+
+{
+  "name": "Gaming"
+}
+
+### 3. Delete Category
+DELETE localhost:7070/api/v1/category/delete/
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2OTIwOTQ4MTAsImVtYWlsIjoiamF2b2hzY3JpcHRAZ21haWwuY29tIiwiaWQiOiJkNGFlMTE0Yi03ZDc4LTQ1YjEtOWZmMC00OGI4NTc5ZGMxMjIiLCJleHAiOjE2OTIxODEyMTAsImlzcyI6IllvdXR1YmUgdGVzdCBwb3J0YWxpIn0.4oPUKhlqUNF09GguZF9-HG4rl4L8NSVLe6DrAKJD5k4bvD6VlSftpvr264o7-fCEet-7_U7WdqLtCuWjLfkSWQ
+
+### 4. Category List
+GET localhost:7070/api/v1/category/open/get_all

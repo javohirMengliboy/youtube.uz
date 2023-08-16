@@ -8,7 +8,7 @@ import java.util.UUID;
 @Setter
 @Getter
 public class CategoryDTO {
-    private UUID id;
+    private Integer id;
     private String name;
     private LocalDateTime createdDate;
 

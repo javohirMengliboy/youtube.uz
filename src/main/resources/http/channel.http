@@ -1,0 +1,47 @@
+### 1. Create Channel
+POST http://localhost:7070/api/v1/channel/create
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2OTIxODIxMTksImVtYWlsIjoiYWxpQGdtYWlsLmNvbSIsImlkIjoiNzQwODNhZWQtOWI5NC00MWQxLTg0ZTYtM2M3MmYxNDE1MzFkIiwiZXhwIjoxNjkyNzg2OTIwLCJpc3MiOiJZb3V0dWJlIHRlc3QgcG9ydGFsaSJ9.rFb5p79KEGTMd_GmR8F0CDZB4TbISkDTs_9nqUZRBX3n3DTcOQjz-AJ-xZ6_PfYS95_IWcWz-zPOeI6InTtiMA
+
+{
+  "name": "Channel 1",
+  "photoId": "photo 1",
+  "description": "description 1",
+  "bannerId": ""
+}
+
+### 2. Update Channel
+PUT http://localhost:7070/api/v1/channel/update_detail/
+Content-Type: application/json
+Authorization: Bearer
+
+{
+  "name": "",
+  "photoId": "",
+  "description": "",
+  "bannerId": ""
+}
+
+### 3. Update Channel photo
+PUT http://localhost:7070/api/v1/channel/update_photo/1&photoId=
+Authorization: Bearer
+
+### 4. Update Channel banner
+PUT http://localhost:7070/api/v1/channel/update_banner/1&bannerId=
+Authorization: Bearer
+
+### 5. Channel Pagination
+GET http://localhost:7070/api/v1/channel/pagination?page=1&size=5
+Authorization: Bearer
+
+### 6. Get Channel By Id
+GET http://localhost:7070/api/v1/channel/open/get_by_id/
+Authorization: Bearer
+
+### 7. Change Channel Status
+PUT http://localhost:7070/api/v1/channel/update_status/1&status=BLOCK
+Authorization: Bearer
+
+### 8. User Channel List
+GET http://localhost:7070/api/v1/channel/open/get_channel_list
+Authorization: Bearer

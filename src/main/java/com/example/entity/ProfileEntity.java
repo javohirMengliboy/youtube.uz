@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -30,7 +32,6 @@ public class ProfileEntity extends BaseEntity{
     @JoinColumn(name = "photo_id", insertable = false, updatable = false)
     private AttachEntity photo;
 
-
     @Enumerated(EnumType.STRING)
     @Column()
     private ProfileRole role;
@@ -41,5 +42,8 @@ public class ProfileEntity extends BaseEntity{
     @Enumerated(EnumType.STRING)
     @Column()
     private ProfileStatus status;
+
+    @OneToMany(mappedBy = "profile")
+    private List<VideoEntity> videoList;
 
 }

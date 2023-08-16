@@ -66,7 +66,7 @@ public class MailSenderService {
         dto.setTitle(builder);
         emailHistoryService.setValue(dto);
 
-        sendMimeEmail(toAccount, builder);
+//        sendMimeEmail(toAccount, builder);
     }
 
     public void updateEmail(String toAccount,String name, String id) {
