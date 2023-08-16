@@ -5,6 +5,7 @@ import com.example.dto.VideoDTO;
 import com.example.dto.VideoShortInfoDTO;
 import com.example.entity.VideoEntity;
 import com.example.enums.PlaylistStatus;
+import com.example.exp.AppBadRequestException;
 import com.example.exp.ItemNotFoundException;
 import com.example.mapper.VideoShortInfo;
 import com.example.repository.VideoRepository;
@@ -44,6 +45,9 @@ public class VideoService {
     // 2. Update Video Detail
     public ApiResponseDTO update(String id, VideoDTO dto) {
         VideoEntity entity = get(id);
+        if (!SpringSecurityUtil.getCurrentUserId().equals(getOwnerId(entity.getId()))){
+            throw new AppBadRequestException("This video not yours");
+        }
         entity.setAttachId(dto.getAttachId());
         entity.setPreviewAttachId(dto.getPreviewAttachId());
         entity.setTitle(dto.getTitle());
@@ -58,22 +62,23 @@ public class VideoService {
 
     }
 
-    private VideoEntity get(String id) {
-        return videoRepository.findById(id).orElseThrow(()->new ItemNotFoundException("Video not found"));
-    }
+
 
     // 3. Change Video Status
     public ApiResponseDTO updateStatus(String id, PlaylistStatus status) {
         VideoEntity entity = get(id);
+        if (!SpringSecurityUtil.getCurrentUserId().equals(getOwnerId(entity.getId()))){
+            throw new AppBadRequestException("This video not yours");
+        }
         entity.setStatus(status);
         videoRepository.save(entity);
         return new ApiResponseDTO(true, "Video status successfully update");
-
     }
 
     // 4. Increase video_view Count
     public VideoShortInfo increaseViewCount(String id) {
-        VideoEntity entity = get(id);
+        VideoEntity entity = new VideoEntity();
+        entity.setId(id);
         entity.setViewCount(entity.getViewCount()+1);
         videoRepository.save(entity);
         return new VideoShortInfo(entity.getTitle(), entity.getViewCount());
@@ -107,5 +112,12 @@ public class VideoService {
             throw new ItemNotFoundException("Video page not found");
         }
         return videoShortInfoPage;
+    }
+
+    private VideoEntity get(String id) {
+        return videoRepository.findById(id).orElseThrow(()->new ItemNotFoundException("Video not found"));
+    }
+    private String getOwnerId(String videoId) {
+        return videoRepository.getOwnerId(videoId).orElseThrow(()->new ItemNotFoundException("Video not found"));
     }
 }

@@ -7,7 +7,6 @@ import com.example.entity.ProfileEntity;
 import com.example.enums.ProfileRole;
 import com.example.enums.ProfileStatus;
 import com.example.exp.AppBadRequestException;
-import com.example.exp.ItemNotFoundException;
 import com.example.repository.ProfileRepository;
 import com.example.util.JWTUtil;
 import com.example.util.MD5Util;
@@ -33,8 +32,8 @@ public class AuthService {
         entity.setEmail(dto.getEmail());
         entity.setPassword(md5Util.encode(dto.getPassword()));
         entity.setPhotoId(dto.getPhotoId());
-        entity.setRole(ProfileRole.ROLE_ADMIN);
-        entity.setStatus(ProfileStatus.REGISTRATION);
+        entity.setRole(ProfileRole.ROLE_USER);
+        entity.setStatus(ProfileStatus.ACTIVE);
         profileRepository.save(entity);
         mailSenderService.sendEmailVerification(dto.getEmail(), entity.getName(), entity.getId(), entity.getEmail());
         dto.setId(entity.getId());
@@ -47,7 +46,7 @@ public class AuthService {
     public ApiResponseDTO authorization(ProfileDTO dto) {
         System.out.println(dto.getEmail());
         Optional<ProfileEntity> optional = profileRepository.findByEmail(dto.getEmail());
-        System.out.println(optional.get().getEmail());
+//        System.out.println(optional.get().getEmail());
         if (optional.isEmpty()){
             return new ApiResponseDTO(false,"Email wrong");
         }

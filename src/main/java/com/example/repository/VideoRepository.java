@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface VideoRepository extends CrudRepository<VideoEntity, String> {
     @Query("select new com.example.mapper.VideoShortInfo(previewAttachId, title, viewCount, channelId, publishedDate) from VideoEntity where categoryId = :categoryId order by publishedDate desc")
@@ -18,4 +19,7 @@ public interface VideoRepository extends CrudRepository<VideoEntity, String> {
 
     @Query("select new com.example.mapper.VideoShortInfo(v.previewAttachId, v.title, v.viewCount, v.channelId, v.publishedDate) from VideoEntity v inner join v.videoAndTagList vt where vt.tagId = :tagId order by v.publishedDate desc")
     Page<VideoShortInfo> getPageByTag(int tagId, Pageable pageable);
+
+    @Query("select channel.profileId from VideoEntity where id = :videoId")
+    Optional<String> getOwnerId(String videoId);
 }

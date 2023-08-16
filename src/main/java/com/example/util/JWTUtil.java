@@ -10,7 +10,7 @@ import java.util.Date;
 public class JWTUtil {
 
     private static final String secretKey = "!maz234^gikey";
-    private static final int tokenLiveTime = 1000 * 3600 * 24; // 1-hour
+    private static final int tokenLiveTime = 1000 * 3600 * 24*7; // 1-hour
 
     private static final int emailTokenLiveTime = tokenLiveTime * 24; // 1-day
     public static String encode(String id, String email) {

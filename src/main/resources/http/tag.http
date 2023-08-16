@@ -1,0 +1,23 @@
+### 1. Create Tag
+POST localhost:7070/api/v1/tag/open/create
+Content-Type: application/json
+
+{
+  "name": "yangilik"
+}
+
+### 2. Update Tag
+PUT localhost:7070/api/v1/tag/update/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2OTIxNjk4MjcsImVtYWlsIjoiamF2b2hzY3JpcHRAZ21haWwuY29tIiwiaWQiOiJkNGFlMTE0Yi03ZDc4LTQ1YjEtOWZmMC00OGI4NTc5ZGMxMjIiLCJleHAiOjE2OTI3NzQ2MjcsImlzcyI6IllvdXR1YmUgdGVzdCBwb3J0YWxpIn0.UtuCK6dBNAULBSXCJtN-FW0kzybLIab3cvU2HAuwzMxg1XTOgIrJanVSuF_pJB9rfxVzYuqJKb8vSyL-0P5UVQ
+
+{
+  "name": "counter_strike"
+}
+
+### 3. Delete Tag
+DELETE localhost:7070/api/v1/tag/delete/6
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2OTIxNjk4MjcsImVtYWlsIjoiamF2b2hzY3JpcHRAZ21haWwuY29tIiwiaWQiOiJkNGFlMTE0Yi03ZDc4LTQ1YjEtOWZmMC00OGI4NTc5ZGMxMjIiLCJleHAiOjE2OTI3NzQ2MjcsImlzcyI6IllvdXR1YmUgdGVzdCBwb3J0YWxpIn0.UtuCK6dBNAULBSXCJtN-FW0kzybLIab3cvU2HAuwzMxg1XTOgIrJanVSuF_pJB9rfxVzYuqJKb8vSyL-0P5UVQ
+
+### 4. Tag List
+GET localhost:7070/api/v1/tag/open/get_all

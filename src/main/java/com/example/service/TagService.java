@@ -9,15 +9,22 @@ import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class TagService {
     @Autowired
     private TagRepository tagRepository;
+
+    // 1. Create Tag
     public TagDTO create(TagDTO dto){
         if (dto.getName() == null || dto.getName().isBlank()) {
             throw new AppBadRequestException("Name is not Available");
+        }
+        Optional<TagEntity> optional = tagRepository.findByName(dto.getName());
+        if (optional.isPresent()){
+            throw new AppBadRequestException("This tag already created");
         }
         TagEntity entity = new TagEntity();
         entity.setName(dto.getName());
@@ -26,25 +33,33 @@ public class TagService {
         dto.setCreatedDate(entity.getCreatedDate());
         return dto;
     }
+
+    // 2. Update Tag
     public Boolean update(Integer id, TagDTO dto){
         TagEntity entity = get(id);
         entity.setName(dto.getName());
-        int effecterRow = tagRepository.updateById(id, dto.getName());
-        return effecterRow == 1;
-    }
-    public Boolean delete(Integer id){
-        tagRepository.deleteById(id);
+        tagRepository.save(entity);
         return true;
     }
-    public List<TagDTO> getAll(){
-        Iterable<TagEntity> iterable = tagRepository.findAll();
-        List<TagDTO> dtos = new LinkedList<>();
-        iterable.forEach(entity -> dtos.add(toDTO(entity)));
-        return dtos;
+
+    // 3. Delete Tag
+    public Boolean delete(Integer id){
+        TagEntity entity = get(id);
+        tagRepository.delete(entity);
+        return true;
     }
 
+    // 4. Tag List
+    public List<TagDTO> getAll(){
+        Iterable<TagEntity> iterable = tagRepository.findAll();
+        List<TagDTO> dtoList = new LinkedList<>();
+        iterable.forEach(entity -> dtoList.add(toDTO(entity)));
+        return dtoList;
+    }
+
+    //---------------------------------------------------------
     public TagEntity get(Integer id) {
-        return tagRepository.findById(id).orElseThrow(() -> new AppBadRequestException("Profilr is not founded"));
+        return tagRepository.findById(id).orElseThrow(() -> new AppBadRequestException("Tag not found"));
     }
     TagDTO toDTO(TagEntity entity){
         TagDTO dto = new TagDTO();

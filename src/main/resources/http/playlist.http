@@ -1,7 +1,7 @@
 ### 1. Create Playlist
 POST http://localhost:7070/api/v1/playlist/create
 Content-Type: application/json
-Authorization: Bearer
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2OTIwOTM0NzAsImVtYWlsIjoiYWxpQGdtYWlsLmNvbSIsImlkIjoiNzQwODNhZWQtOWI5NC00MWQxLTg0ZTYtM2M3MmYxNDE1MzFkIiwiZXhwIjoxNjkyMTc5ODcwLCJpc3MiOiJZb3V0dWJlIHRlc3QgcG9ydGFsaSJ9.gzNQCAiI3AScgAhowYgq_pl-XEC_inpRdsmewF2wxsEPqYe8Yg_E8evM716ykW2at25N4i3UmaqKgrf00mBEuw
 
 {
   "channelId": "",

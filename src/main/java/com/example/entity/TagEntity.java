@@ -17,11 +17,11 @@ public class TagEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
 
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     private String name;
 
     @Column(name = "createdDate")
-    private LocalDateTime createdDate;
+    private LocalDateTime createdDate = LocalDateTime.now();
 
     @OneToMany(mappedBy = "tag")
     private List<VideoAndTagEntity> videoAndTagEntityList;
