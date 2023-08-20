@@ -1,2 +1,2 @@
-package com.example.enums;public class PlaylistStatus {
+package com.example.enums;public enum PlaylistStatus {
 }

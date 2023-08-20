@@ -4,18 +4,20 @@ import com.example.dto.ApiResponseDTO;
 import com.example.dto.JwtDTO;
 import com.example.dto.ProfileDTO;
 import com.example.entity.ProfileEntity;
+import com.example.enums.Language;
 import com.example.enums.ProfileRole;
 import com.example.enums.ProfileStatus;
 import com.example.exp.AppBadRequestException;
-import com.example.exp.ItemNotFoundException;
 import com.example.repository.ProfileRepository;
 import com.example.util.JWTUtil;
 import com.example.util.MD5Util;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class AuthService {
     @Autowired
@@ -26,7 +28,21 @@ public class AuthService {
     @Autowired
     private MD5Util md5Util;
 
-    public ProfileDTO registration(ProfileDTO dto) {
+    @Autowired
+    private ResourceBundleService resourceBundleService;
+
+    public Object registration(ProfileDTO dto, Language language) {
+
+        Optional<ProfileEntity> exists = profileRepository.findByEmail(dto.getEmail());
+        if (exists.isPresent()) {
+            if (exists.get().getStatus().equals(ProfileStatus.REGISTRATION)) {
+                profileRepository.delete(exists.get());
+            } else {
+                return new ApiResponseDTO(false, resourceBundleService.getMessage("email.already.exists", language));
+            }
+        }
+
+
         ProfileEntity entity = new ProfileEntity();
         entity.setName(dto.getName());
         entity.setSurname(dto.getSurname());
@@ -48,15 +64,15 @@ public class AuthService {
         System.out.println(dto.getEmail());
         Optional<ProfileEntity> optional = profileRepository.findByEmail(dto.getEmail());
         System.out.println(optional.get().getEmail());
-        if (optional.isEmpty()){
-            return new ApiResponseDTO(false,"Email wrong");
+        if (optional.isEmpty()) {
+            return new ApiResponseDTO(false, "Email wrong");
         }
         ProfileEntity entity = optional.get();
-        if (!entity.getPassword().equals(md5Util.encode(dto.getPassword()))){
-            return new ApiResponseDTO(false,"Password wrong");
+        if (!entity.getPassword().equals(md5Util.encode(dto.getPassword()))) {
+            return new ApiResponseDTO(false, "Password wrong");
         }
-        if (!entity.getStatus().equals(ProfileStatus.ACTIVE)){
-            return new ApiResponseDTO(false,"Your status not active");
+        if (!entity.getStatus().equals(ProfileStatus.ACTIVE)) {
+            return new ApiResponseDTO(false, "Your status not active");
         }
 
         ProfileDTO response = new ProfileDTO();

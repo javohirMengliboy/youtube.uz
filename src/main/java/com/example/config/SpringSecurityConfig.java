@@ -33,19 +33,23 @@ public class SpringSecurityConfig {
             "/api/v1/news/**",
             "/api/v1/region/lang",
             "/api/v1/attach/**",
-            "/api/v1/article/public/*"};
+            "/api/v1/article/public/*",
+            "api/v1/email/create", "/v3/api-docs",
+            "/v3/api-docs",
+            "/v3/api-docs/**",
+            "/swagger-ui/**"};
 
 
     @Bean
-    public AuthenticationProvider authenticationProvider(){
+    public AuthenticationProvider authenticationProvider() {
         final DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userDetailsService);
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
     }
 
-    private PasswordEncoder passwordEncoder(){
-        return new PasswordEncoder(){
+    private PasswordEncoder passwordEncoder() {
+        return new PasswordEncoder() {
 
             @Override
             public String encode(CharSequence rawPassword) {
@@ -60,8 +64,12 @@ public class SpringSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        http.authorizeHttpRequests((c)-> c.requestMatchers("/api/v1/auth/**").permitAll().anyRequest().authenticated())
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests((c) ->
+                        c.requestMatchers("/api/v1/auth/**").permitAll().
+                                requestMatchers(AUTH_WHITELIST).permitAll().
+                                requestMatchers("api/v1/email/create").permitAll().
+                                anyRequest().authenticated())
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
         http.csrf(AbstractHttpConfigurer::disable).cors(AbstractHttpConfigurer::disable);
         return http.build();
