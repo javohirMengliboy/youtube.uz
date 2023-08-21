@@ -1,5 +1,5 @@
 ### create email
-POST localhost:8080/api/v1/email/create
+POST localhost:7070/api/v1/email/create
 Content-Type: application/json
 
 {

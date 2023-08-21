@@ -30,10 +30,10 @@ Content-Type: application/json
 Authorization: Bearer
 
 {
-  "name": "",
-  "surname": " ",
-  "email": " ",
-  "password": " "
+  "name": "shohjahon",
+  "surname": "hamdamov",
+  "email": "hamdamovshohjahon20000@gmail.com",
+  "password": "shohjahon2000"
 }
 
 

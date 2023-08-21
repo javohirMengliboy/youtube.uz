@@ -3,10 +3,10 @@ POST http://localhost:7070/api/v1/auth/registration
 Content-Type: application/json
 
 {
-  "name": "Ali",
-  "surname": "Aliyev",
-  "email": "ali@gmail.com",
-  "password": "Ali1"
+  "name": "Shohjahon",
+  "surname": "Hamdamov",
+  "email": "hamdamovshohjahon2007@gmail.com",
+  "password": "shohjahon2000"
 }
 
 ### Login for ADMIN
@@ -14,8 +14,8 @@ POST http://localhost:7070/api/v1/auth/authorization
 Content-Type: application/json
 
 {
-  "email": "javohscript@gmail.com",
-  "password": "Javohir1"
+  "email": "hamdamovshohjahon2007@gmail.com",
+  "password": "shohjahon2000"
 }
 ### Login for User
 POST http://localhost:7070/api/v1/auth/authorization

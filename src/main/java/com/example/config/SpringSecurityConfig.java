@@ -29,24 +29,26 @@ public class SpringSecurityConfig {
     private MD5Util md5Util;
 
     public static String[] AUTH_WHITELIST = {"/api/v1/auth/**",
+            "/api/v1/news/**",
+            "/api/v1/region/lang",
             "/api/v1/attach/**",
-            "/api/v1/tag/open/**",
-            "/api/v1/category/open/**",
-            "/api/v1/channel/open/**",
-            "/api/v1/video/open/**",
-    };
+            "/api/v1/article/public/*",
+            "api/v1/email/create", "/v3/api-docs",
+            "/v3/api-docs",
+            "/v3/api-docs/**",
+            "/swagger-ui/**"};
 
 
     @Bean
-    public AuthenticationProvider authenticationProvider(){
+    public AuthenticationProvider authenticationProvider() {
         final DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userDetailsService);
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
     }
 
-    private PasswordEncoder passwordEncoder(){
-        return new PasswordEncoder(){
+    private PasswordEncoder passwordEncoder() {
+        return new PasswordEncoder() {
 
             @Override
             public String encode(CharSequence rawPassword) {
@@ -61,12 +63,11 @@ public class SpringSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        http.authorizeHttpRequests((c)->
-               c.requestMatchers(AUTH_WHITELIST).permitAll()
-                       .requestMatchers("/api/v1/auth/**").permitAll()
-                       .requestMatchers("/api/v1/tag/open/**").permitAll()
-                       .anyRequest().authenticated())
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests((c) ->
+                        c.requestMatchers(AUTH_WHITELIST).permitAll().
+                                requestMatchers("api/v1/email/create").permitAll().
+                                anyRequest().authenticated())
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
         http.csrf(AbstractHttpConfigurer::disable).cors(AbstractHttpConfigurer::disable);
         return http.build();
