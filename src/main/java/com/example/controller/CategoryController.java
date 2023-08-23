@@ -29,10 +29,8 @@ public class CategoryController {
     // 2. Update Category
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping(value = "/update/{id}")
-    public ResponseEntity<Boolean> update(@PathVariable("id")Integer id,
     @Operation(summary = "Update region by id", description = "This api used for update region by id.")
-
-    public ResponseEntity<Boolean> update(@PathVariable("id")UUID id,
+    public ResponseEntity<Boolean> update(@PathVariable("id")Integer id,
                                           @RequestBody CategoryDTO dto){
             return ResponseEntity.ok(categoryService.update(id,dto));
     }
@@ -40,15 +38,13 @@ public class CategoryController {
     // 3. Delete Category
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping(value = "/delete/{id}")
-    public ResponseEntity<Boolean> delete(@PathVariable("id") Integer id){
     @Operation(summary = "Delete region", description = "This api used for region deleted.")
-    public ResponseEntity<Boolean> delete(@PathVariable("id") UUID id){
+    public ResponseEntity<Boolean> delete(@PathVariable("id") Integer id){
         return ResponseEntity.ok(categoryService.delete(id));
     }
 
     // 4. Category List
     @GetMapping(value = "/open/get_all")
-    @GetMapping(value = "/all")
     @Operation(summary = "Get all region", description = "This api used for get all region.")
     public ResponseEntity<List<CategoryDTO>> get(){
         return ResponseEntity.ok(categoryService.getAll());

@@ -35,7 +35,7 @@ public class TagService {
     }
 
     // 2. Update Tag
-    public Boolean update(Integer id, TagDTO dto){
+    public Boolean update(UUID id, TagDTO dto){
         TagEntity entity = get(id);
         entity.setName(dto.getName());
         tagRepository.save(entity);
@@ -43,7 +43,7 @@ public class TagService {
     }
 
     // 3. Delete Tag
-    public Boolean delete(Integer id){
+    public Boolean delete(UUID id){
         TagEntity entity = get(id);
         tagRepository.delete(entity);
         return true;

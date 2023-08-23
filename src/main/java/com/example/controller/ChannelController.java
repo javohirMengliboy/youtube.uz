@@ -68,7 +68,6 @@ public class ChannelController {
 
     // 6. Get Channel By Id
     @GetMapping("/open/get_by_id/{id}")
-    @GetMapping("/get_by_id/{id}")
     @Operation(summary = "get channel by id", description = "This api used for get channel by id.")
     public ResponseEntity<ChannelMapper> getById(@PathVariable("id") String id){
         return ResponseEntity.ok().body(channelService.getById(id));
@@ -86,7 +85,6 @@ public class ChannelController {
     // 8. User Channel List
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/open/get_channel_list")
-    @GetMapping("get_channel_list")
     @Operation(summary = "get channel list", description = "This api used for get channel list.")
     public ResponseEntity<List<ChannelMapper>> getChannelList(){
         return ResponseEntity.ok().body(channelService.getChannelList());
