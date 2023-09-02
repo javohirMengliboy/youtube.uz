@@ -1,13 +1,13 @@
 ### 1. Create Channel
 POST http://localhost:7070/api/v1/channel/create
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2OTIxODIxMTksImVtYWlsIjoiYWxpQGdtYWlsLmNvbSIsImlkIjoiNzQwODNhZWQtOWI5NC00MWQxLTg0ZTYtM2M3MmYxNDE1MzFkIiwiZXhwIjoxNjkyNzg2OTIwLCJpc3MiOiJZb3V0dWJlIHRlc3QgcG9ydGFsaSJ9.rFb5p79KEGTMd_GmR8F0CDZB4TbISkDTs_9nqUZRBX3n3DTcOQjz-AJ-xZ6_PfYS95_IWcWz-zPOeI6InTtiMA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2OTM1NDU1MzQsImVtYWlsIjoiYWxpQGdtYWlsLmNvbSIsImlkIjoiNzQwODNhZWQtOWI5NC00MWQxLTg0ZTYtM2M3MmYxNDE1MzFkIiwiZXhwIjoxNjk0MTUwMzM0LCJpc3MiOiJZb3V0dWJlIHRlc3QgcG9ydGFsaSJ9.bkFtbeYoowcCgf2SxKIGcA5D3qR5jx-HWckOqYrJeJ45rSTuaINpEYd-WvQbX9vnOPOD5FxNtQLgSQ0OtDw26A
 
 {
-  "name": "Channel 1",
-  "photoId": "photo 1",
-  "description": "description 1",
-  "bannerId": ""
+  "name": "Fikrat",
+  "photoId": "4aede9a2-c379-412a-951b-facbeadbcf41.jpg",
+  "description": "Fikrat description",
+  "bannerId": "40d7b806-a673-4106-a6b0-b71188e922d2.jpg"
 }
 
 ### 2. Update Channel

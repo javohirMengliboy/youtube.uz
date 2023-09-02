@@ -1,18 +1,21 @@
 ### 1. Create Video
 POST localhost:7070/api/v1/video/create
 Content-Type: application/json
-Authorization: Bearer
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2OTM1NDU1MzQsImVtYWlsIjoiYWxpQGdtYWlsLmNvbSIsImlkIjoiNzQwODNhZWQtOWI5NC00MWQxLTg0ZTYtM2M3MmYxNDE1MzFkIiwiZXhwIjoxNjk0MTUwMzM0LCJpc3MiOiJZb3V0dWJlIHRlc3QgcG9ydGFsaSJ9.bkFtbeYoowcCgf2SxKIGcA5D3qR5jx-HWckOqYrJeJ45rSTuaINpEYd-WvQbX9vnOPOD5FxNtQLgSQ0OtDw26A
 
 {
-  "id": "",
-  "previewAttachId": "",
-  "title": "",
-  "categoryId": 1,
-  "attachId": "",
-  "status": "",
-  "type": "",
-  "description": "",
-  "channelId": ""
+  "previewAttachId": "60704317-6a3f-4976-b5e3-64686bc609ae.jpg",
+  "title": "Putinning Turkiyaga borishi nimalarni o'zgartiradi?",
+  "categoryId": 203,
+  "attachId": "f6be6ea5-21d5-4261-84a1-5f7906e10bec.mp4",
+  "status": "PUBLIC",
+  "type": "VIDEO",
+  "description": "Putinning Turkiyaga borishi description",
+  "channelId": "c05cc210-89e9-4878-9416-342d045a18b4",
+  "viewCount": 10546,
+  "sharedCount": 200,
+  "likeCount": 237,
+  "dislikeCount": 9
 }
 
 ### 2. Update Video Detail
@@ -47,4 +50,7 @@ GET localhost:7070/api/v1/video/open/search_by_title?title=
 
 ### 7. Get video by tag_id with pagination
 GET localhost:7070/api/v1/video/open/get_page_by_tag?tag=1&page=1&size=5
+
+### 8. Get Video By id
+GET localhost:7070/api/v1/video/open/get_video_by_id/
 

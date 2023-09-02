@@ -1,0 +1,45 @@
+### 1. Crate Comment
+POST http://localhost:7070/api/v1/comment/create
+Content-Type: application/json
+Authorization: Bearer
+
+{
+  "videoId": "",
+  "content": "",
+  "replyId": ""
+}
+
+### 2. Update Comment
+PUT http://localhost:7070/api/v1/comment/update/
+Content-Type: application/json
+Authorization: Bearer
+
+{
+  "videoId": "",
+  "content": "",
+  "replyId": ""
+}
+
+### 3. Delete Comment
+DELETE http://localhost:7070/api/v1/comment/delete/
+Authorization: Bearer
+
+### 4. Comment List Pagination
+GET http://localhost:7070/api/v1/comment/get_all_pagination?page=1&size=5
+Authorization: Bearer
+
+### 5. Comment List By profileId
+GET http://localhost:7070/api/v1/comment/get_list_by_profile_id?profileId=
+Authorization: Bearer
+
+### 6. Comment List By Profile
+GET http://localhost:7070/api/v1/comment/get_list_by_profile
+Authorization: Bearer
+
+### 7. Comment List by videoId
+GET http://localhost:7070/api/v1/comment/get_list_by_video_id?videoId=
+Authorization: Bearer
+
+### 8. Get Comment Replied Comment by comment Id
+GET http://localhost:7070/api/v1/comment/get_replied_comment_list_by_comment_id/
+Authorization: Bearer

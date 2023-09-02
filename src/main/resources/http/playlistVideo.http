@@ -1,0 +1,34 @@
+### 1. Create
+POST http://localhost:7070/api/v1/playlistVideo/create
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2OTM1NDU1MzQsImVtYWlsIjoiYWxpQGdtYWlsLmNvbSIsImlkIjoiNzQwODNhZWQtOWI5NC00MWQxLTg0ZTYtM2M3MmYxNDE1MzFkIiwiZXhwIjoxNjk0MTUwMzM0LCJpc3MiOiJZb3V0dWJlIHRlc3QgcG9ydGFsaSJ9.bkFtbeYoowcCgf2SxKIGcA5D3qR5jx-HWckOqYrJeJ45rSTuaINpEYd-WvQbX9vnOPOD5FxNtQLgSQ0OtDw26A
+
+{
+  "playlistId": 1,
+  "videoId": "9b492487-b020-4b6e-989a-897bd1a50c34",
+  "orderNumber": 2
+}
+
+### 2. Update
+PUT http://localhost:7070/api/v1/playlistVideo/update/
+Content-Type: application/json
+Authorization: Bearer
+
+{
+  "playlistId": 1,
+  "videoId": "",
+  "orderNumber": 2
+}
+
+### 3. Delete PlayListVideo
+DELETE http://localhost:7070/api/v1/playlistVideo/delete/
+Authorization: Bearer
+
+### 4. Get Video list by playListId
+GET http://localhost:7070/api/v1/playlistVideo/get_video_list_by_playlist_id?playlistId=1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2OTM1NDU1MzQsImVtYWlsIjoiYWxpQGdtYWlsLmNvbSIsImlkIjoiNzQwODNhZWQtOWI5NC00MWQxLTg0ZTYtM2M3MmYxNDE1MzFkIiwiZXhwIjoxNjk0MTUwMzM0LCJpc3MiOiJZb3V0dWJlIHRlc3QgcG9ydGFsaSJ9.bkFtbeYoowcCgf2SxKIGcA5D3qR5jx-HWckOqYrJeJ45rSTuaINpEYd-WvQbX9vnOPOD5FxNtQLgSQ0OtDw26A
+
+
+
+
+

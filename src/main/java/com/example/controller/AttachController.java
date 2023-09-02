@@ -25,8 +25,13 @@ public class AttachController {
     }
 
     @GetMapping(value = "/open/{id}/img", produces = MediaType.IMAGE_PNG_VALUE)
-    public byte[] openById(@PathVariable Integer id){
+    public byte[] openById(@PathVariable String id){
         return attachService.getById(id);
+    }
+
+    @GetMapping(value = "/open/{id}/general")
+    public ResponseEntity<byte[]> openByIdGeneral(@PathVariable("id") String id) {
+        return ResponseEntity.ok().contentType(MediaType.parseMediaType("video/mp4")).body(attachService.loadByIdGeneral(id));
     }
 
     @GetMapping("/download/{fileName}")
@@ -44,7 +49,7 @@ public class AttachController {
 
 
     @DeleteMapping("/admin/delete/{id}")
-    public ResponseEntity<Boolean>deleteById(@PathVariable Integer id){
+    public ResponseEntity<Boolean>deleteById(@PathVariable String id){
         return ResponseEntity.ok(attachService.deleteById(id));
     }
 

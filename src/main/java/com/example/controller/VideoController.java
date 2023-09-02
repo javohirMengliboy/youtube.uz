@@ -66,4 +66,8 @@ public class VideoController {
                                                              @RequestParam("size") int size){
         return ResponseEntity.ok().body(videoService.getPageByTag(tagId, page, size));
     }
+
+//    //  8. Get Video By id
+//    @GetMapping("/open/get_video_by_id/{videoId}")
+//    public ResponseEntity()
 }

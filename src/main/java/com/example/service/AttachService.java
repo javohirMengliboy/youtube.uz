@@ -14,6 +14,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -28,8 +29,10 @@ public class AttachService {
 
     @Autowired
     private AttachRepository attachRepository;
+
     @Value("${attach.folder.name}")
     private String folderName;
+
     @Value("${attach.url}")
     private String attachUrl;
 
@@ -41,38 +44,42 @@ public class AttachService {
         }
         String key = UUID.randomUUID().toString();
         String extension = getExtension(file.getOriginalFilename());
-        System.out.println(extension);
-        System.out.println(file.getContentType());
         try {
             byte[] bytes = file.getBytes();
-            Path path = Paths.get(folderName + "/" + pathFolder + "/s" + key + "." + extension);
+            Path path = Paths.get(folderName + "/" + pathFolder + "/" + key + "." + extension );
             Files.write(path, bytes);
+//            String duration = getDuration(file, path);
             AttachEntity attachEntity = new AttachEntity();
-            attachEntity.setId(key);
+            attachEntity.setId(key+ "." + extension);
             attachEntity.setSize(file.getSize());
             attachEntity.setExtension(extension);
-            attachEntity.setOrigin_name(file.getOriginalFilename());
-            attachEntity.setPath(folderName + "/" + pathFolder + "/" + key + "." + extension);
+            attachEntity.setOriginalName(file.getOriginalFilename());
+            attachEntity.setPath(folderName + "/" + pathFolder);
+//            attachEntity.setDuration(duration);
             attachRepository.save(attachEntity);
             AttachDTO attachDTO = new AttachDTO();
-            attachDTO.setId(key);
-            attachDTO.setPath(attachUrl);
-            attachDTO.setSize(file.getSize());
-            attachDTO.setExtension(extension);
-            attachDTO.setUrl(getUrl(key));
-            attachDTO.setOrigin_name(file.getOriginalFilename());
+            attachDTO.setId(attachEntity.getId());
+            attachDTO.setPath(attachEntity.getPath());
+            attachDTO.setSize(attachEntity.getSize());
+            attachDTO.setExtension(attachEntity.getExtension());
+            attachDTO.setDuration(attachEntity.getDuration());
+            if (extension.equals("mp4")){
+                attachDTO.setUrl(getUrl(key + "." + extension + "/general"));
+            }else {
+                attachDTO.setUrl(getUrl(key + "." + extension+"/img"));
+            }
+            attachDTO.setOrigin_name(attachEntity.getOriginalName());
             return attachDTO;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public byte[] getById(Integer id){
+    public byte[] getById(String id){
         AttachEntity attachEntity = get(id);
-
         try {
             String url = attachEntity.getPath();
-            BufferedImage image = ImageIO.read(new File(url));
+            BufferedImage image = ImageIO.read(new File(url+"/"+id));
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(image, attachEntity.getExtension(), baos);
             baos.flush();
@@ -80,20 +87,31 @@ public class AttachService {
             baos.close();
             return bytes;
         } catch (IOException e) {
-            e.printStackTrace();
             return new byte[0];
         }
     }
 
+    public byte[] loadByIdGeneral(String id) {
+        AttachEntity entity = get(id);
+        try {
+            String url = entity.getPath() + "/" + id;
+            File file = new File(url);
+            byte[] bytes = new byte[(int) file.length()];
 
+            FileInputStream fileInputStream = new FileInputStream(file);
+            fileInputStream.read(bytes);
+            fileInputStream.close();
+            return bytes;
+        } catch (Exception e) {
+            return new byte[0];
+        }
+    }
 
     public byte[] downloadImage(String fileName) throws IOException{
         Optional<AttachEntity> imageObject = attachRepository.getByName(fileName);
         String fullPath = imageObject.get().getPath();
         return Files.readAllBytes(new File(fullPath).toPath());
     }
-
-
 
     public PageImpl<AttachDTO> pagination(Integer page, Integer size) {
         Sort sort = Sort.by(Sort.Direction.ASC, "id");
@@ -105,14 +123,13 @@ public class AttachService {
             attachDTO.setPath(s.getPath());
             attachDTO.setSize(s.getSize());
             attachDTO.setExtension(s.getExtension());
-            attachDTO.setOrigin_name(s.getOrigin_name());
+            attachDTO.setOrigin_name(s.getOriginalName());
             return attachDTO;
         }).toList();
         return new PageImpl<>(dtoList, pageable, pageObj.getTotalElements());
     }
 
-
-    public Boolean deleteById(Integer id) {
+    public Boolean deleteById(String id) {
         boolean t = false;
         AttachEntity attachEntity = get(id);
         attachRepository.deleteById(id);
@@ -123,14 +140,11 @@ public class AttachService {
         return t;
     }
 
-
     private String getUrl(String id) {
-        return attachUrl + "/open/" + id + "/img";
+        return attachUrl + "/open/" + id;
     }
 
-
-
-    private AttachEntity get(Integer id) {
+    private AttachEntity get(String id) {
         return attachRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("Attach not found!"));
     }
 
@@ -145,4 +159,30 @@ public class AttachService {
         int day = Calendar.getInstance().get(Calendar.DATE);
         return year + "/" + month + "/" + day;
     }
+
+    private String getDuration(MultipartFile file, Path path){
+        try {
+            Path tempFile = Files.createTempFile("temp", file.getOriginalFilename());
+            file.transferTo(tempFile.toFile());
+            System.out.println("path -> ");
+//            file.transferTo(path.toFile());
+            String[] command = {"ffmpeg", "-i", tempFile.toString()};
+            ProcessBuilder processBuilder = new ProcessBuilder(command);
+            Process process = processBuilder.start();
+            String output = new String(process.getInputStream().readAllBytes());
+            String durationLine = output.lines().filter(line -> line.contains("Duration:"))
+                    .findFirst().orElse("");
+
+            String[] durationParts = durationLine.split(",")[0].split("Duration:")[1].trim().split(":");
+            int hours = Integer.parseInt(durationParts[0]);
+            int minutes = Integer.parseInt(durationParts[1]);
+            float seconds = Integer.parseInt(durationParts[2]);
+
+            float totalDurationInSeconds = hours * 3600 + minutes * 60 + seconds;
+            return "Duration: " + totalDurationInSeconds + " seconds";
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

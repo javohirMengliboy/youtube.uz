@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -36,9 +37,16 @@ public class VideoService {
         entity.setDescription(dto.getDescription());
         entity.setChannelId(dto.getChannelId());
         entity.setProfileId(SpringSecurityUtil.getCurrentUserId());
+        entity.setViewCount(dto.getViewCount());
+        entity.setSharedCount(dto.getSharedCount());
+        entity.setLikeCount(dto.getLikeCount());
+        entity.setDislikeCount(dto.getDislikeCount());
+        entity.setPublishedDate(LocalDateTime.now().plusHours(18));
         videoRepository.save(entity);
+        dto.setId(entity.getId());
         dto.setCreatedDate(entity.getCreatedDate());
         dto.setProfileId(entity.getProfileId());
+        dto.setPublishedDate(entity.getPublishedDate());
         return dto;
     }
 
@@ -117,7 +125,7 @@ public class VideoService {
     private VideoEntity get(String id) {
         return videoRepository.findById(id).orElseThrow(()->new ItemNotFoundException("Video not found"));
     }
-    private String getOwnerId(String videoId) {
+    public String getOwnerId(String videoId) {
         return videoRepository.getOwnerId(videoId).orElseThrow(()->new ItemNotFoundException("Video not found"));
     }
 }

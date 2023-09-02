@@ -33,6 +33,7 @@ public class SpringSecurityConfig {
             "/api/v1/tag/open/**",
             "/api/v1/category/open/**",
             "/api/v1/channel/open/**",
+            "/api/v1/playlist/open/**",
             "/api/v1/video/open/**",
     };
 

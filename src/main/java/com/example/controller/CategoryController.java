@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.dto.CategoryDTO;
+import com.example.entity.CategoryEntity;
 import com.example.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +24,9 @@ public class CategoryController {
     }
 
     // 2. Update Category
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PutMapping(value = "/update/{id}")
-    public ResponseEntity<Boolean> update(@PathVariable("id")Integer id,
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping(value = "/open/update/{id}")
+    public ResponseEntity<CategoryEntity> update(@PathVariable("id")Integer id,
                                           @RequestBody CategoryDTO dto){
             return ResponseEntity.ok(categoryService.update(id,dto));
     }
@@ -41,6 +42,12 @@ public class CategoryController {
     @GetMapping(value = "/open/get_all")
     public ResponseEntity<List<CategoryDTO>> get(){
         return ResponseEntity.ok(categoryService.getAll());
+    }
+
+
+    @GetMapping(value = "/open/get_by_id/{id}")
+    public ResponseEntity<CategoryEntity> getById(@PathVariable("id") Integer id){
+        return ResponseEntity.ok(categoryService.get(id));
     }
 
 }

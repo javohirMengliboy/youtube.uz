@@ -5,6 +5,8 @@ import com.example.entity.CategoryEntity;
 import com.example.exp.AppBadRequestException;
 import com.example.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Iterator;
@@ -32,11 +34,12 @@ public class CategoryService {
     }
 
     // 2. Update Category
-    public Boolean update(Integer id,CategoryDTO categoryDTO){
+    @CachePut(value = "category", key = "#id")
+    public CategoryEntity update(Integer id,CategoryDTO categoryDTO){
         CategoryEntity entity = get(id);
         entity.setName(categoryDTO.getName());
         int effecterRow = categoryRepository.updateById(id, categoryDTO.getName());
-        return effecterRow == 1;
+        return entity;
     }
 
     // 3. Delete Category
@@ -46,6 +49,7 @@ public class CategoryService {
     }
 
     // 4. Category List
+    @Cacheable(value = "categoryList")
     public List<CategoryDTO> getAll(){
         Iterable<CategoryEntity> iterable = categoryRepository.findAll();
         List<CategoryDTO> dtos = new LinkedList<>();
@@ -54,9 +58,12 @@ public class CategoryService {
     }
 
     //---------------------------------------------------------------
-    public CategoryEntity get(Integer profileId) {
-        return categoryRepository.findById(profileId).orElseThrow(() -> new AppBadRequestException("Profilr is not founded"));
+    @Cacheable(value = "category", key = "#categoryId")
+    public CategoryEntity get(Integer categoryId) {
+        System.out.println("GET");
+        return categoryRepository.findById(categoryId).orElseThrow(() -> new AppBadRequestException("Profilr is not founded"));
     }
+
     CategoryDTO toDTO(CategoryEntity entity){
         CategoryDTO dto = new CategoryDTO();
         dto.setId(entity.getId());

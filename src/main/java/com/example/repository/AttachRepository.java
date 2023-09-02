@@ -12,11 +12,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface AttachRepository extends CrudRepository<AttachEntity,Integer>,
-        PagingAndSortingRepository<AttachEntity, Integer> {
+public interface AttachRepository extends CrudRepository<AttachEntity,String>,
+        PagingAndSortingRepository<AttachEntity, String> {
 
 
-    @Query("select a from AttachEntity as a where a.origin_name =:origin_name")
+    @Query("select a from AttachEntity as a where a.originalName =:origin_name")
     Optional<AttachEntity> getByName(@Param("origin_name")String origin_name);
 
 }

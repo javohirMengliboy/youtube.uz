@@ -1,27 +1,27 @@
 ### 1. Create Playlist
 POST http://localhost:7070/api/v1/playlist/create
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2OTIwOTM0NzAsImVtYWlsIjoiYWxpQGdtYWlsLmNvbSIsImlkIjoiNzQwODNhZWQtOWI5NC00MWQxLTg0ZTYtM2M3MmYxNDE1MzFkIiwiZXhwIjoxNjkyMTc5ODcwLCJpc3MiOiJZb3V0dWJlIHRlc3QgcG9ydGFsaSJ9.gzNQCAiI3AScgAhowYgq_pl-XEC_inpRdsmewF2wxsEPqYe8Yg_E8evM716ykW2at25N4i3UmaqKgrf00mBEuw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2OTM1NDU1MzQsImVtYWlsIjoiYWxpQGdtYWlsLmNvbSIsImlkIjoiNzQwODNhZWQtOWI5NC00MWQxLTg0ZTYtM2M3MmYxNDE1MzFkIiwiZXhwIjoxNjk0MTUwMzM0LCJpc3MiOiJZb3V0dWJlIHRlc3QgcG9ydGFsaSJ9.bkFtbeYoowcCgf2SxKIGcA5D3qR5jx-HWckOqYrJeJ45rSTuaINpEYd-WvQbX9vnOPOD5FxNtQLgSQ0OtDw26A
 
 {
-  "channelId": "",
-  "name": "",
+  "channelId": "c05cc210-89e9-4878-9416-342d045a18b4",
+  "name": "#ayni_damda",
   "description": "",
-  "status": "",
+  "status": "PUBLIC",
   "orderNumber": 1
 }
 
 ### 2. Update Playlist
-PUT http://localhost:7070/api/v1/playlist/update/id
+PUT http://localhost:7070/api/v1/playlist/update/3
 Content-Type: application/json
-Authorization: Bearer
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2OTM1NDU1MzQsImVtYWlsIjoiYWxpQGdtYWlsLmNvbSIsImlkIjoiNzQwODNhZWQtOWI5NC00MWQxLTg0ZTYtM2M3MmYxNDE1MzFkIiwiZXhwIjoxNjk0MTUwMzM0LCJpc3MiOiJZb3V0dWJlIHRlc3QgcG9ydGFsaSJ9.bkFtbeYoowcCgf2SxKIGcA5D3qR5jx-HWckOqYrJeJ45rSTuaINpEYd-WvQbX9vnOPOD5FxNtQLgSQ0OtDw26A
 
 {
-  "channelId": "",
-  "name": "",
+  "channelId": "c05cc210-89e9-4878-9416-342d045a18b4",
+  "name": "#ayni_damda",
   "description": "",
-  "status": "",
-  "orderNumber": 1
+  "status": "PUBLIC",
+  "orderNumber": 3
 }
 
 ### 3. Change Playlist
@@ -43,5 +43,15 @@ Authorization: Bearer
 ### 7. Get User Playlist
 GET http://localhost:7070/api/v1/playlist/get_user_playlist
 Authorization: Bearer
+
+### 8. Get Channel Play List By ChannelKey
+GET http://localhost:7070/api/v1/playlist/get_channel_playlists
+Authorization: Bearer
+
+### 9. Get Playlist by id
+GET http://localhost:7070/api/v1/playlist/get_playlist_by_id
+Authorization: Bearer
+
+
 
 

@@ -3,6 +3,7 @@ package com.example.dto;
 import com.example.entity.AttachEntity;
 import com.example.entity.ProfileEntity;
 import com.example.enums.ProfileStatus;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ChannelDTO {
     private String id;
     private LocalDateTime createdDate = LocalDateTime.now();

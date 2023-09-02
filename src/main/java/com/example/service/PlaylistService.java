@@ -9,6 +9,8 @@ import com.example.enums.ProfileRole;
 import com.example.exp.AppBadRequestException;
 import com.example.exp.ItemNotFoundException;
 import com.example.mapper.PlayListShortInfo;
+import com.example.mapper.PlaylistFullInfoMapper;
+import com.example.mapper.PlaylistFullInfoMapperI;
 import com.example.repository.PlaylistRepository;
 import com.example.util.SpringSecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,6 +108,30 @@ public class PlaylistService {
         return playlistList;
     }
 
+    // 8. Get Channel Play List By ChannelKey
+    public List<PlayListShortInfo> getChannelPlaylist(String channelId) {
+        List<PlayListShortInfo> playlistList = playlistRepository.getChannelPlaylist(channelId);
+        if (playlistList.isEmpty()){
+            throw new ItemNotFoundException("Playlist list not found");
+        }
+        return playlistList;
+    }
+
+    // 9. Get Playlist by id
+    public PlaylistFullInfoMapper getPlaylistById(Integer playlistId) {
+        PlaylistFullInfoMapperI object = playlistRepository.getPlaylistById(playlistId);
+        if (object == null){
+            throw new ItemNotFoundException("Playlist list not found");
+        }
+        PlaylistFullInfoMapper fullInfoMapper = new PlaylistFullInfoMapper();
+        fullInfoMapper.setId(object.getId());
+        fullInfoMapper.setName(object.getName());
+        fullInfoMapper.setVideoCount(object.getVideoCount());
+        fullInfoMapper.setTotalViewCount(object.getTotalViewCount());
+        fullInfoMapper.setLastUpdateDate(object.getLastUpdateDate());
+        return fullInfoMapper;
+    }
+
     //----------------------------------------------
     private PlaylistEntity get(Integer id) {
         return playlistRepository.findById(id).orElseThrow(()->new ItemNotFoundException("Playlist not found"));
@@ -114,4 +140,5 @@ public class PlaylistService {
     public ProfileEntity getOwner(Integer playlistId){
         return playlistRepository.getOwner(playlistId);
     }
+
 }

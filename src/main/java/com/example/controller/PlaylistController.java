@@ -4,6 +4,8 @@ import com.example.dto.ApiResponseDTO;
 import com.example.dto.PlaylistDTO;
 import com.example.enums.PlaylistStatus;
 import com.example.mapper.PlayListShortInfo;
+import com.example.mapper.PlaylistFullInfoMapper;
+import com.example.mapper.PlaylistFullInfoMapperI;
 import com.example.service.PlaylistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -69,5 +71,17 @@ public class PlaylistController {
     @PutMapping("/get_user_playlist")
     public ResponseEntity<List<PlayListShortInfo>> getUserPlaylist(){
         return ResponseEntity.ok().body(playlistService.getUserPlaylist());
+    }
+
+    // 8. Get Channel Play List By ChannelKey
+    @PutMapping("/open/get_channel_playlists/{channelId}")
+    public ResponseEntity<List<PlayListShortInfo>> getChannelPlaylist(@PathVariable("channelId") String channelId){
+        return ResponseEntity.ok().body(playlistService.getChannelPlaylist(channelId));
+    }
+
+    // 9. Get Playlist by id
+    @PutMapping("/open/get_playlist_by_id/{playlistId}")
+    public ResponseEntity<PlaylistFullInfoMapper> getPlaylistById(@PathVariable("playlistId") Integer playlistId){
+        return ResponseEntity.ok().body(playlistService.getPlaylistById(playlistId));
     }
 }
