@@ -140,7 +140,7 @@ public class AttachService {
         return t;
     }
 
-    private String getUrl(String id) {
+    public String getUrl(String id) {
         return attachUrl + "/open/" + id;
     }
 

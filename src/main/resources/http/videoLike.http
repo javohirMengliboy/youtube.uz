@@ -1,0 +1,16 @@
+### 1. Create Video like
+PUT http://localhost:7070/api/v1/videoLike/like?videoId=
+Authorization: Bearer
+
+### 2. Remove Video Like
+PUT http://localhost:7070/api/v1/videoLike/dislike?videoId=
+Authorization: Bearer
+
+### 3. User Liked Video List
+GET http://localhost:7070/api/v1/videoLike/get_liked_video_list_for_user
+Authorization: Bearer
+
+### 4. Get User LikedVideo List By UserId
+GET http://localhost:7070/api/v1/videoLike/get_liked_video_list_user_by_user_id?userId=
+Authorization: Bearer
+

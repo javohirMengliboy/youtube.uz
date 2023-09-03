@@ -38,7 +38,7 @@ public class EmailHistoryService {
 
 
     public PageImpl<EmailHistoryDTO> emailPagination(int page, int size){
-        Pageable pageable = PageRequest.of(page,size, Sort.Direction.DESC,"id");
+        Pageable pageable = PageRequest.of(page-1,size, Sort.Direction.DESC,"id");
         Page<EmailHistoryEntity> pageObj = emailRepository.findAll(pageable);
         List<EmailHistoryDTO> list = pageObj.stream().map(this::toDTO).collect(Collectors.toList());
         return new PageImpl<>(list,pageable,pageObj.getTotalElements());
@@ -48,7 +48,7 @@ public class EmailHistoryService {
 
 
     public PageImpl<EmailHistoryDTO> emailPaginationByEmail(String email, int page, int size){
-        Pageable pageable = PageRequest.of(page,size, Sort.Direction.DESC,"id");
+        Pageable pageable = PageRequest.of(page-1,size, Sort.Direction.DESC,"id");
         Page<EmailHistoryEntity> pageObj = emailRepository.pageByEmail(pageable,email);
         List<EmailHistoryDTO> list = pageObj.stream().map(this::toDTO).collect(Collectors.toList());
         return new PageImpl<>(list,pageable,pageObj.getTotalElements());

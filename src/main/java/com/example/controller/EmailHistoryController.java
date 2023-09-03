@@ -18,25 +18,25 @@ public class EmailHistoryController {
 
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping(value = "admin/pagination")
+    @GetMapping(value = "/pagination")
     public ResponseEntity<PageImpl<EmailHistoryDTO>> emailPagination(@RequestParam(value = "page",defaultValue = "1")int page,
                                                                      @RequestParam(value = "size",defaultValue = "10")int size){
-        PageImpl<EmailHistoryDTO> pagination = emailService.emailPagination(page-1,size);
+        PageImpl<EmailHistoryDTO> pagination = emailService.emailPagination(page,size);
         return ResponseEntity.ok(pagination);
 
     }
 
 
-    @GetMapping(value = "/pagination/by/email")
+    @GetMapping(value = "/pagination_by_email")
     public ResponseEntity<PageImpl<EmailHistoryDTO>> emailPaginationByEmail(@RequestParam("email")String email,@RequestParam(value = "page",defaultValue = "1")int page,
                                                                      @RequestParam(value = "size",defaultValue = "10")int size){
-        PageImpl<EmailHistoryDTO> pagination = emailService.emailPaginationByEmail(email,page-1,size);
+        PageImpl<EmailHistoryDTO> pagination = emailService.emailPaginationByEmail(email,page,size);
         return ResponseEntity.ok(pagination);
 
     }
 
 
-    @PostMapping(value = "/filter")
+    @GetMapping(value = "/filter")
     public ResponseEntity<PageImpl<EmailHistoryDTO>> filter(@RequestBody EmailFilterDTO filterDTO,
                                                             @RequestParam(value = "page", defaultValue = "1") int page,
                                                             @RequestParam(value = "size", defaultValue = "10") int size) {

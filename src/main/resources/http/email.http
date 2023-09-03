@@ -9,4 +9,13 @@ Content-Type: application/json
 }
 
 ### pagination
-GET localhost:8080/api/v1/email/admin/pagination?page=1&size=10
+GET localhost:8080/api/v1/email/pagination?page=1&size=10
+Authorization: Bearer
+
+### pagination
+GET localhost:8080/api/v1/email/pagination_by_email?page=1&size=10
+
+### pagination
+GET localhost:8080/api/v1/email/filter?page=1&size=10
+Content-Type: application/json
+Authorization: Bearer
