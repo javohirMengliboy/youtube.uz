@@ -1,18 +1,18 @@
 ### 1. Crate Comment
 POST http://localhost:7070/api/v1/comment/create
 Content-Type: application/json
-Authorization: Bearer
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2OTM4MjI0NDYsImVtYWlsIjoidmFsaUBnbWFpbC5jb20iLCJpZCI6IjkxMWZiZjk0LThlYjYtNGQxOC1hY2FhLWUyM2I4ZTA0YTMyNSIsImV4cCI6MTY5NDQyNzI0NiwiaXNzIjoiWW91dHViZSB0ZXN0IHBvcnRhbGkifQ.Q2jB91GMy7qRi73xceYc2XADtbNr6HBaevKjxDgegonKeJOBM6CRtggH099J-G0LrplQiHRyoK-wDiEFjPoG8A
 
 {
-  "videoId": "",
-  "content": "",
-  "replyId": ""
+  "videoId": "ad77f505-f162-4531-aedd-fca0103f78e1",
+  "content": "To'g'ri aytasiz bir kun baribir sinadi",
+  "replyId": "959e0bff-b17d-4be7-97b2-66d123da5e3b"
 }
 
 ### 2. Update Comment
 PUT http://localhost:7070/api/v1/comment/update/
 Content-Type: application/json
-Authorization: Bearer
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2OTM4MjE2OTIsImVtYWlsIjoiamFzdXJAZ21haWwuY29tIiwiaWQiOiJjNGMxZWJmOS0wOGExLTQ3YjgtODQ2Zi0xMmIwOWFmZWQ2N2EiLCJleHAiOjE2OTQ0MjY0OTIsImlzcyI6IllvdXR1YmUgdGVzdCBwb3J0YWxpIn0.B6_DuI8I7QTyNLNwMpK3nwn5EFhGvMJev0L0Flj5pxbyF_9ckJKqVK56y-qUqMOjNPfT7JBkadk4HeQL-uSCtQ
 
 {
   "videoId": "",
@@ -26,20 +26,18 @@ Authorization: Bearer
 
 ### 4. Comment List Pagination
 GET http://localhost:7070/api/v1/comment/get_all_pagination?page=1&size=5
-Authorization: Bearer
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2OTM4MTk4MDIsImVtYWlsIjoiamF2b2hzY3JpcHRAZ21haWwuY29tIiwiaWQiOiJkNGFlMTE0Yi03ZDc4LTQ1YjEtOWZmMC00OGI4NTc5ZGMxMjIiLCJleHAiOjE2OTQ0MjQ2MDIsImlzcyI6IllvdXR1YmUgdGVzdCBwb3J0YWxpIn0.Rg2-PQhv4FkhJVEOcMHBXSuC-RbDXfFPYhGVIBp69GchFkbKrvZn0Q_zzPjWjuVVV9mD1rksGKbDMThdhxHxFQ
 
 ### 5. Comment List By profileId
-GET http://localhost:7070/api/v1/comment/get_list_by_profile_id?profileId=
-Authorization: Bearer
+GET http://localhost:7070/api/v1/comment/get_list_by_profile_id?profileId=c4c1ebf9-08a1-47b8-846f-12b09afed67a
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2OTM4MTk4MDIsImVtYWlsIjoiamF2b2hzY3JpcHRAZ21haWwuY29tIiwiaWQiOiJkNGFlMTE0Yi03ZDc4LTQ1YjEtOWZmMC00OGI4NTc5ZGMxMjIiLCJleHAiOjE2OTQ0MjQ2MDIsImlzcyI6IllvdXR1YmUgdGVzdCBwb3J0YWxpIn0.Rg2-PQhv4FkhJVEOcMHBXSuC-RbDXfFPYhGVIBp69GchFkbKrvZn0Q_zzPjWjuVVV9mD1rksGKbDMThdhxHxFQ
 
 ### 6. Comment List By Profile
 GET http://localhost:7070/api/v1/comment/get_list_by_profile
-Authorization: Bearer
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2OTM4MjI0NDYsImVtYWlsIjoidmFsaUBnbWFpbC5jb20iLCJpZCI6IjkxMWZiZjk0LThlYjYtNGQxOC1hY2FhLWUyM2I4ZTA0YTMyNSIsImV4cCI6MTY5NDQyNzI0NiwiaXNzIjoiWW91dHViZSB0ZXN0IHBvcnRhbGkifQ.Q2jB91GMy7qRi73xceYc2XADtbNr6HBaevKjxDgegonKeJOBM6CRtggH099J-G0LrplQiHRyoK-wDiEFjPoG8A
 
 ### 7. Comment List by videoId
-GET http://localhost:7070/api/v1/comment/get_list_by_video_id?videoId=
-Authorization: Bearer
+GET http://localhost:7070/api/v1/comment/open/get_list_by_video_id?videoId=ad77f505-f162-4531-aedd-fca0103f78e1
 
 ### 8. Get Comment Replied Comment by comment Id
-GET http://localhost:7070/api/v1/comment/get_replied_comment_list_by_comment_id/
-Authorization: Bearer
+GET http://localhost:7070/api/v1/comment/open/get_replied_comment_list_by_comment_id/1e0483f0-7e4c-4f85-abdf-11161020895b

@@ -82,7 +82,7 @@ public class PlaylistService {
 
     // 5. Playlist Pagination
     public Page<PlaylistDTO> pagination(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page-1, size);
         Page<PlaylistDTO> playlistPage = playlistRepository.getPlaylistPage(pageable);
         if (playlistPage.isEmpty()){
             throw new ItemNotFoundException("Playlist page not found");

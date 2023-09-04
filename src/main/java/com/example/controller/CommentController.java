@@ -55,13 +55,13 @@ public class CommentController {
     }
 
     // 7. Comment List by videoId
-    @GetMapping("/get_list_by_video_id")
+    @GetMapping("/open/get_list_by_video_id")
     public ResponseEntity<List<CommentDTO>> getListByVideoId(@RequestParam("videoId") String videoId) {
         return ResponseEntity.ok().body(commentService.getListByVideoId(videoId));
     }
 
     // 8. Get Comment Replied Comment by comment Id
-    @GetMapping("/get_replied_comment_list_by_comment_id/{id}")
+    @GetMapping("/open/get_replied_comment_list_by_comment_id/{id}")
     public ResponseEntity<List<CommentDTO>> getRepliedCommentListByCommentId(@PathVariable("id") String id) {
         return ResponseEntity.ok().body(commentService.getRepliedCommentListByCommentId(id));
     }

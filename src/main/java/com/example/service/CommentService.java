@@ -29,8 +29,10 @@ public class CommentService {
         entity.setVideoId(dto.getVideoId());
         entity.setProfileId(SpringSecurityUtil.getCurrentUserId());
         entity.setContent(dto.getContent());
+        entity.setReplyId(dto.getReplyId());
         commentRepository.save(entity);
-        dto.setId(entity.getReplyId());
+        dto.setId(entity.getId());
+        dto.setReplyId(entity.getReplyId());
         dto.setCreatedDate(entity.getCreatedDate());
         dto.setProfileId(entity.getProfileId());
         return dto;
@@ -65,7 +67,7 @@ public class CommentService {
 
     // 4. Comment List Pagination
     public Page<CommentDTO> getAllPagination(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page-1, size);
         Page<CommentDTO> dtoPage = commentRepository.getAllPagination(pageable);
         if (dtoPage.isEmpty()){
             throw new ItemNotFoundException("Comment page not found");
@@ -86,7 +88,7 @@ public class CommentService {
     public List<CommentDTO> getListByProfile() {
         List<CommentDTO> commentList = commentRepository.getListByProfileId(SpringSecurityUtil.getCurrentUserId());
         if (commentList.isEmpty()){
-            throw new ItemNotFoundException("Comment list not found");
+            throw new ItemNotFoundException("You have not commented");
         }
         return commentList;
     }
@@ -95,7 +97,7 @@ public class CommentService {
     public List<CommentDTO> getListByVideoId(String videoId) {
         List<CommentDTO> commentList = commentRepository.getListByVideoId(videoId);
         if (commentList.isEmpty()){
-            throw new ItemNotFoundException("Comment list not found");
+            throw new ItemNotFoundException("Comment not found in this video");
         }
         return commentList;
     }
@@ -104,7 +106,7 @@ public class CommentService {
     public List<CommentDTO> getRepliedCommentListByCommentId(String id) {
         List<CommentDTO> commentList = commentRepository.getRepliedCommentListByCommentId(id);
         if (commentList.isEmpty()){
-            throw new ItemNotFoundException("Comment list not found");
+            throw new ItemNotFoundException("Reply comment not found");
         }
         return commentList;
     }

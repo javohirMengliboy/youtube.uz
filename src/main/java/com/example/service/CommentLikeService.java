@@ -1,6 +1,7 @@
 package com.example.service;
 
 import com.example.dto.ApiResponseDTO;
+import com.example.dto.CommentLikeDTO;
 import com.example.dto.VideoLikeDTO;
 import com.example.entity.CommentLikeEntity;
 import com.example.enums.LikeType;
@@ -64,8 +65,8 @@ public class CommentLikeService {
     }
 
     // 3. User Liked Video List
-    public List<VideoLikeDTO> getLikedVideoListForUser() {
-        List<VideoLikeDTO> dtoList = commentLikeRepository.getVideoListLikedForUser(SpringSecurityUtil.getCurrentUserId());
+    public List<CommentLikeDTO> getLikedVideoListForUser() {
+        List<CommentLikeDTO> dtoList = commentLikeRepository.getVideoListLikedForUser(SpringSecurityUtil.getCurrentUserId());
         if (dtoList.isEmpty()){
             throw new AppBadRequestException("Liked video not found");
         }
@@ -73,8 +74,8 @@ public class CommentLikeService {
     }
 
     // 4. Get User LikedVideo List By UserId
-    public List<VideoLikeDTO> getLikedVideoListByUserId(String userId) {
-        List<VideoLikeDTO> dtoList = commentLikeRepository.getVideoListLikedForUser(userId);
+    public List<CommentLikeDTO> getLikedVideoListByUserId(String userId) {
+        List<CommentLikeDTO> dtoList = commentLikeRepository.getVideoListLikedForUser(userId);
         if (dtoList.isEmpty()){
             throw new AppBadRequestException("Liked video not found");
         }

@@ -22,6 +22,7 @@ public class CommentLikeEntity extends BaseEntity{
     @JoinColumn(name = "comment_id", insertable = false, updatable = false)
     private CommentEntity comment;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "type")
     private LikeType type;
 }

@@ -3,11 +3,10 @@ POST http://localhost:7070/api/v1/auth/registration
 Content-Type: application/json
 
 {
-  "name": "Husan",
-  "surname": "Husanov",
-  "email": "husan@gmail.com",
-  "password": "Husan1",
-  "photoId": "fhghgj"
+  "name": "Jasur",
+  "surname": "Jasurov",
+  "email": "jasur@gmail.com",
+  "password": "Jasur1"
 }
 
 ### Login for ADMIN

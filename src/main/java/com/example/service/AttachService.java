@@ -36,6 +36,7 @@ public class AttachService {
     @Value("${attach.url}")
     private String attachUrl;
 
+    // 1. Attach upload
     public AttachDTO upload(MultipartFile file) {
         String pathFolder = getYMD();
         File folder = new File(folderName + "/" + pathFolder);
@@ -75,6 +76,7 @@ public class AttachService {
         }
     }
 
+    // 2. Open by id
     public byte[] getById(String id){
         AttachEntity attachEntity = get(id);
         try {
@@ -91,6 +93,7 @@ public class AttachService {
         }
     }
 
+    // 2. Open General
     public byte[] loadByIdGeneral(String id) {
         AttachEntity entity = get(id);
         try {
@@ -107,16 +110,18 @@ public class AttachService {
         }
     }
 
+    // 3. Download Attach
     public byte[] downloadImage(String fileName) throws IOException{
         Optional<AttachEntity> imageObject = attachRepository.getByName(fileName);
-        String fullPath = imageObject.get().getPath();
+        String fullPath = imageObject.get().getPath()+"/"+imageObject.get().getId();
         return Files.readAllBytes(new File(fullPath).toPath());
     }
 
+    // 4. Attach pagination
     public PageImpl<AttachDTO> pagination(Integer page, Integer size) {
         Sort sort = Sort.by(Sort.Direction.ASC, "id");
         Pageable pageable = PageRequest.of(page, size, sort);
-        Page<AttachEntity> pageObj = attachRepository.findAll(pageable);
+        Page<AttachEntity> pageObj = attachRepository.getAttachPagination(pageable);
         List<AttachDTO> dtoList = pageObj.getContent().stream().map(s -> {
             AttachDTO attachDTO = new AttachDTO();
             attachDTO.setId(s.getId());
@@ -129,6 +134,7 @@ public class AttachService {
         return new PageImpl<>(dtoList, pageable, pageObj.getTotalElements());
     }
 
+    // 5. Delete Attach
     public Boolean deleteById(String id) {
         boolean t = false;
         AttachEntity attachEntity = get(id);

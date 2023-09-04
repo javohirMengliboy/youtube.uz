@@ -28,14 +28,14 @@ public interface PlaylistRepository extends CrudRepository<PlaylistEntity, Integ
     ProfileEntity getOwner(Integer playlistId);
 
     @Query("select new com.example.mapper.PlayListShortInfo(ch.name, p.name, p.status) from PlaylistEntity p" +
-            " inner join p.channel ch where ch.id = :channelId and p.status = 'PUBLIC' order by p.orderNumber")
+            " inner join p.channel ch where ch.id = :channelId and p.status = PUBLIC order by p.orderNumber")
     List<PlayListShortInfo> getChannelPlaylist(String channelId);
 
     @Query(value = "select id, name," +
-            " (select count(*) from playlist_video where playlist_id = :playlistId) as videoCount," +
-            " (select sum(v.view_count) from playlist_video pv inner join video v on pv.video_id = v.id" +
+            " (select count(*) from playlist_and_video where playlist_id = :playlistId) as videoCount," +
+            " (select sum(v.view_count) from playlist_and_video pv inner join video v on pv.video_id = v.id" +
             " where pv.playlist_id = :playlistId) as totalViewCount, " +
-            " (select v.published_date from playlist_video pv inner join video v on pv.video_id = v.id" +
-            " where pv.playlist_id = :playlistId order by v.published_date desc  limit 1) as lastUpdateDate from playlist ", nativeQuery = true)
+            " (select v.published_date from playlist_and_video pv inner join video v on pv.video_id = v.id" +
+            " where pv.playlist_id = :playlistId order by v.published_date desc  limit 1) as lastUpdateDate from playlist where id = :playlistId", nativeQuery = true)
     PlaylistFullInfoMapperI getPlaylistById(Integer playlistId);
 }

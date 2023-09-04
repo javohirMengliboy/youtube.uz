@@ -14,9 +14,9 @@ import java.util.Optional;
 public interface ChannelRepository extends CrudRepository<ChannelEntity, String> {
     Optional<ChannelEntity> findByName(String name);
 
-    @Query("select new com.example.mapper.ChannelMapper(name, photoId,description, status) from ChannelEntity")
-    Page<ChannelMapper> pagination(Pageable pageable);
+    @Query("from ChannelEntity")
+    Page<ChannelEntity> pagination(Pageable pageable);
 
-    @Query("select new com.example.mapper.ChannelMapper(name, photoId,description, status) from ChannelEntity where profileId = :profileId")
+    @Query("select new com.example.mapper.ChannelMapper(id,name, photoId,description, status) from ChannelEntity where profileId = :profileId")
     List<ChannelMapper> getChannelList(@Param("profileId") String currentUserId);
 }

@@ -13,10 +13,12 @@ import com.example.repository.ChannelRepository;
 import com.example.util.SpringSecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -89,19 +91,30 @@ public class ChannelService {
     }
 
     // 5. Channel Pagination
-    public Page<ChannelMapper> pagination(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<ChannelMapper> channelPage = channelRepository.pagination(pageable);
-        if (channelPage.isEmpty()){
+    public PageImpl<ChannelMapper> pagination(int page, int size) {
+        Pageable pageable = PageRequest.of(page-1, size);
+        Page<ChannelEntity> entityPage = channelRepository.pagination(pageable);
+        if (entityPage.isEmpty()){
             throw new ItemNotFoundException("Channel Not Found");
         }
-        return channelPage;
+        List<ChannelMapper> mapperList = new ArrayList<>();
+        entityPage.forEach(entity -> {
+            ChannelMapper mapper = new ChannelMapper();
+            mapper.setId(entity.getId());
+            mapper.setName(entity.getName());
+            mapper.setPhotoId(entity.getPhotoId());
+            mapper.setDescription(entity.getDescription());
+            mapper.setStatus(entity.getStatus());
+            mapperList.add(mapper);
+
+        });
+        return new PageImpl<>(mapperList, pageable, entityPage.getTotalElements());
     }
     // 6. Get Channel By Id
 
     public ChannelMapper getById(String id) {
         ChannelEntity entity = get(id);
-        return new ChannelMapper(entity.getName(), entity.getPhotoId(), entity.getDescription(), entity.getStatus());
+        return new ChannelMapper(entity.getId(), entity.getName(), entity.getPhotoId(), entity.getDescription(), entity.getStatus());
     }
 
     // 7. Change Channel Status

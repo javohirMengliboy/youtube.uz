@@ -9,6 +9,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ChannelMapper {
+    private String id;
     private String name;
     private String photoId;
     private String description;
@@ -17,7 +18,8 @@ public class ChannelMapper {
     public ChannelMapper() {
     }
 
-    public ChannelMapper(String name, String photoId, String description, ProfileStatus status) {
+    public ChannelMapper(String id,String name, String photoId, String description, ProfileStatus status) {
+        this.id = id;
         this.name = name;
         this.photoId = photoId;
         this.description = description;

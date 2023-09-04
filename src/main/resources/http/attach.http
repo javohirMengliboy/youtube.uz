@@ -10,5 +10,14 @@ Content-Disposition: form-data; name="file"; filename="Putinning_Turkiyaga_boris
 ### 2. Open by id
 GET http://localhost:7070/api/v1/attach/open/d43624a7-732a-430d-ab80-2c827fc11a5c.mp4/img
 
-### 3. Open General
+### 2. Open General
 GET http://localhost:7070/api/v1/attach/open/86ae6f92-a305-41f4-8da6-3b4d5442c2be.mp4/general
+
+### 3. Download Attach
+GET http://localhost:7070/api/v1/attach/download/Afrosiyob_preview.jpg
+
+### 4. Attach pagination
+GET http://localhost:7070/api/v1/attach/pagination?page=1&size=5
+
+### 4. Attach pagination
+DELETE http://localhost:7070/api/v1/attach/delete/c9261326-ddcd-46b0-8bbf-0f1bbd028601.jpg

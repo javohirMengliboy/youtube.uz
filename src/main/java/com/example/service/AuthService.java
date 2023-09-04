@@ -34,7 +34,7 @@ public class AuthService {
         entity.setPhotoId(dto.getPhotoId());
         entity.setRole(ProfileRole.ROLE_USER);
         entity.setStatus(ProfileStatus.ACTIVE);
-        entity.setPhotoId(dto.getPhotoId());
+//        entity.setPhotoId(dto.getPhotoId());
         profileRepository.save(entity);
         mailSenderService.sendEmailVerification(dto.getEmail(), entity.getName(), entity.getId(), entity.getEmail());
         dto.setId(entity.getId());

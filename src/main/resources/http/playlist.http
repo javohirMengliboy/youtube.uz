@@ -34,23 +34,21 @@ Authorization: Bearer
 
 ### 5. Playlist Pagination
 GET http://localhost:7070/api/v1/playlist/pagination?page=1&size=4
-Authorization: Bearer
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2OTM4MTk4MDIsImVtYWlsIjoiamF2b2hzY3JpcHRAZ21haWwuY29tIiwiaWQiOiJkNGFlMTE0Yi03ZDc4LTQ1YjEtOWZmMC00OGI4NTc5ZGMxMjIiLCJleHAiOjE2OTQ0MjQ2MDIsImlzcyI6IllvdXR1YmUgdGVzdCBwb3J0YWxpIn0.Rg2-PQhv4FkhJVEOcMHBXSuC-RbDXfFPYhGVIBp69GchFkbKrvZn0Q_zzPjWjuVVV9mD1rksGKbDMThdhxHxFQ
 
 ### 6. Playlist List By UserId
-GET http://localhost:7070/api/v1/playlist/list_by_user_id?userId=
-Authorization: Bearer
+GET http://localhost:7070/api/v1/playlist/list_by_user_id?userId=74083aed-9b94-41d1-84e6-3c72f141531d
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2OTM4MTk4MDIsImVtYWlsIjoiamF2b2hzY3JpcHRAZ21haWwuY29tIiwiaWQiOiJkNGFlMTE0Yi03ZDc4LTQ1YjEtOWZmMC00OGI4NTc5ZGMxMjIiLCJleHAiOjE2OTQ0MjQ2MDIsImlzcyI6IllvdXR1YmUgdGVzdCBwb3J0YWxpIn0.Rg2-PQhv4FkhJVEOcMHBXSuC-RbDXfFPYhGVIBp69GchFkbKrvZn0Q_zzPjWjuVVV9mD1rksGKbDMThdhxHxFQ
 
 ### 7. Get User Playlist
 GET http://localhost:7070/api/v1/playlist/get_user_playlist
-Authorization: Bearer
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2OTM4MzM3NzQsImVtYWlsIjoiYWxpQGdtYWlsLmNvbSIsImlkIjoiNzQwODNhZWQtOWI5NC00MWQxLTg0ZTYtM2M3MmYxNDE1MzFkIiwiZXhwIjoxNjk0NDM4NTc0LCJpc3MiOiJZb3V0dWJlIHRlc3QgcG9ydGFsaSJ9.V6lWH5OXNq5Bc-eTZtlOi4u7QrtqYLSuceiLCr3k_X5fz9wwTICDpu34Z31guapy16UNledwXRThLfjhWhMOoQ
 
 ### 8. Get Channel Play List By ChannelKey
-GET http://localhost:7070/api/v1/playlist/get_channel_playlists
-Authorization: Bearer
+GET http://localhost:7070/api/v1/playlist/open/get_channel_playlists/c05cc210-89e9-4878-9416-342d045a18b4
 
 ### 9. Get Playlist by id
-GET http://localhost:7070/api/v1/playlist/get_playlist_by_id
-Authorization: Bearer
+GET http://localhost:7070/api/v1/playlist/open/get_playlist_by_id/1
 
 
 

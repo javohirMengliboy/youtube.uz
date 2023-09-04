@@ -32,16 +32,15 @@ Authorization: Bearer
 
 ### 5. Channel Pagination
 GET http://localhost:7070/api/v1/channel/pagination?page=1&size=5
-Authorization: Bearer
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2OTM4MTk4MDIsImVtYWlsIjoiamF2b2hzY3JpcHRAZ21haWwuY29tIiwiaWQiOiJkNGFlMTE0Yi03ZDc4LTQ1YjEtOWZmMC00OGI4NTc5ZGMxMjIiLCJleHAiOjE2OTQ0MjQ2MDIsImlzcyI6IllvdXR1YmUgdGVzdCBwb3J0YWxpIn0.Rg2-PQhv4FkhJVEOcMHBXSuC-RbDXfFPYhGVIBp69GchFkbKrvZn0Q_zzPjWjuVVV9mD1rksGKbDMThdhxHxFQ
 
 ### 6. Get Channel By Id
-GET http://localhost:7070/api/v1/channel/open/get_by_id/
-Authorization: Bearer
+GET http://localhost:7070/api/v1/channel/open/get_by_id/c05cc210-89e9-4878-9416-342d045a18b4
 
 ### 7. Change Channel Status
 PUT http://localhost:7070/api/v1/channel/update_status/1&status=BLOCK
 Authorization: Bearer
 
 ### 8. User Channel List
-GET http://localhost:7070/api/v1/channel/open/get_channel_list
-Authorization: Bearer
+GET http://localhost:7070/api/v1/channel/get_channel_list
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2OTM4MjY0NDMsImVtYWlsIjoidmFsaUBnbWFpbC5jb20iLCJpZCI6IjkxMWZiZjk0LThlYjYtNGQxOC1hY2FhLWUyM2I4ZTA0YTMyNSIsImV4cCI6MTY5NDQzMTI0MywiaXNzIjoiWW91dHViZSB0ZXN0IHBvcnRhbGkifQ._ZMsZUA0TNLKSI4haikTw5T1ZGS48GMjQy9XUzNZsa7uRMZzeRj9UED8GqbObweNHKf4FviQ0P0OUvjg5q-PBA

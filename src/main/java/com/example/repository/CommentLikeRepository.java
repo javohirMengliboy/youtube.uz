@@ -1,5 +1,6 @@
 package com.example.repository;
 
+import com.example.dto.CommentLikeDTO;
 import com.example.dto.VideoLikeDTO;
 import com.example.entity.CommentLikeEntity;
 import com.example.entity.VideoLikeEntity;
@@ -12,5 +13,5 @@ public interface CommentLikeRepository extends CrudRepository<CommentLikeEntity,
     CommentLikeEntity findByCommentIdAndProfileId(String commentId, String profileId);
 
     @Query("select new com.example.dto.CommentLikeDTO(id, profileId, commentId, type, createdDate) from CommentLikeEntity where profileId = :currentUserId")
-    List<VideoLikeDTO> getVideoListLikedForUser(String currentUserId);
+    List<CommentLikeDTO> getVideoListLikedForUser(String currentUserId);
 }

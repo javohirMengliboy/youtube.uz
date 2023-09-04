@@ -53,7 +53,7 @@ public class PlaylistController {
 
     // 5. Playlist Pagination
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PutMapping("/pagination")
+    @GetMapping("/pagination")
     public ResponseEntity<Page<PlaylistDTO>> pagination(@RequestParam("page") int page,
                                                         @RequestParam("size") int size){
         return ResponseEntity.ok().body(playlistService.pagination(page, size));
@@ -61,26 +61,26 @@ public class PlaylistController {
 
     // 6. Playlist List By UserId
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PutMapping("/list_by_user_id")
+    @GetMapping("/list_by_user_id")
     public ResponseEntity<List<PlaylistDTO>> getListByUserId(@RequestParam("userId") String userId){
         return ResponseEntity.ok().body(playlistService.getListByUserId(userId));
     }
 
     // 7. Get User Playlist
     @PreAuthorize("hasRole('ROLE_USER')")
-    @PutMapping("/get_user_playlist")
+    @GetMapping("/get_user_playlist")
     public ResponseEntity<List<PlayListShortInfo>> getUserPlaylist(){
         return ResponseEntity.ok().body(playlistService.getUserPlaylist());
     }
 
     // 8. Get Channel Play List By ChannelKey
-    @PutMapping("/open/get_channel_playlists/{channelId}")
+    @GetMapping("/open/get_channel_playlists/{channelId}")
     public ResponseEntity<List<PlayListShortInfo>> getChannelPlaylist(@PathVariable("channelId") String channelId){
         return ResponseEntity.ok().body(playlistService.getChannelPlaylist(channelId));
     }
 
     // 9. Get Playlist by id
-    @PutMapping("/open/get_playlist_by_id/{playlistId}")
+    @GetMapping("/open/get_playlist_by_id/{playlistId}")
     public ResponseEntity<PlaylistFullInfoMapper> getPlaylistById(@PathVariable("playlistId") Integer playlistId){
         return ResponseEntity.ok().body(playlistService.getPlaylistById(playlistId));
     }

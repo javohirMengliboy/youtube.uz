@@ -74,7 +74,7 @@ public class ChannelController {
 
     // 8. User Channel List
     @PreAuthorize("hasRole('ROLE_USER')")
-    @GetMapping("/open/get_channel_list")
+    @GetMapping("/get_channel_list")
     public ResponseEntity<List<ChannelMapper>> getChannelList(){
         return ResponseEntity.ok().body(channelService.getChannelList());
     }
