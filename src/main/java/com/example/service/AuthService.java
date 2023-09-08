@@ -11,12 +11,14 @@ import com.example.exp.AppBadRequestException;
 import com.example.repository.ProfileRepository;
 import com.example.util.JWTUtil;
 import com.example.util.MD5Util;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
-
+@Setter
 @Slf4j
 @Service
 public class AuthService {
@@ -31,7 +33,7 @@ public class AuthService {
     @Autowired
     private ResourceBundleService resourceBundleService;
 
-    public Object registration(ProfileDTO dto, Language language) {
+    public ApiResponseDTO registration(ProfileDTO dto, Language language) {
 
         Optional<ProfileEntity> exists = profileRepository.findByEmail(dto.getEmail());
         if (exists.isPresent()) {
@@ -41,7 +43,6 @@ public class AuthService {
                 return new ApiResponseDTO(false, resourceBundleService.getMessage("email.already.exists", language));
             }
         }
-
 
         ProfileEntity entity = new ProfileEntity();
         entity.setName(dto.getName());
@@ -57,18 +58,17 @@ public class AuthService {
         dto.setRole(entity.getRole());
         dto.setStatus(entity.getStatus());
         dto.setCreatedDate(entity.getCreatedDate());
-        return dto;
+        return new ApiResponseDTO(true, "Profile added");
     }
 
     public ApiResponseDTO authorization(ProfileDTO dto) {
         System.out.println(dto.getEmail());
         Optional<ProfileEntity> optional = profileRepository.findByEmail(dto.getEmail());
-        System.out.println(optional.get().getEmail());
         if (optional.isEmpty()) {
             return new ApiResponseDTO(false, "Email wrong");
         }
         ProfileEntity entity = optional.get();
-        if (!entity.getPassword().equals(md5Util.encode(dto.getPassword()))) {
+        if (!Objects.equals(entity.getPassword(), md5Util.encode(dto.getPassword()))) {
             return new ApiResponseDTO(false, "Password wrong");
         }
         if (!entity.getStatus().equals(ProfileStatus.ACTIVE)) {
